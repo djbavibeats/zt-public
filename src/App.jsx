@@ -19,7 +19,7 @@ function App() {
             position: [ 0, 2, 8 ]
         } }
         onCreated={(state) => {
-          state.scene.fog = new Fog('#262837', 0.5, 15)
+          state.scene.fog = new Fog('black', 0.25, 15)
         }}
       >   
       <EffectComposer>
