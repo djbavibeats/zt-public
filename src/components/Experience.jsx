@@ -1,5 +1,5 @@
 import { useLoader, useFrame } from '@react-three/fiber'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { Perf } from 'r3f-perf'
 import { useControls } from 'leva'
 import { TextureLoader } from 'three/src/loaders/TextureLoader'

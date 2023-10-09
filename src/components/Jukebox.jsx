@@ -6,10 +6,11 @@ import React, { useState, useEffect, useRef } from "react"
 import { useGLTF } from "@react-three/drei"
 import { useFrame, useThree } from "@react-three/fiber"
 import * as THREE from 'three'
+import { Howl, Howler } from 'howler'
 import { gsap } from "gsap/gsap-core"
 
 export default function Jukebox(props) {
-  const { nodes, materials } = useGLTF("./jukebox-v2.glb")
+  const { nodes, materials } = useGLTF("./jukebox-v3.glb")
   const [ hovered, setHovered ] = useState(false)
   const [ songHovered, setSongHovered ] = useState(false)
   const [ zoomed, setZoomed ] = useState(false)
@@ -42,6 +43,11 @@ export default function Jukebox(props) {
   const [ songButton11Active, setSongButton11Active ] = useState(false)
   const songButton12 = useRef()
   const [ songButton12Active, setSongButton12Active ] = useState(false)
+  const leftNavButton = useRef()
+  const rightNavButton = useRef()
+  const [ activePanel, setActivePanel ] = useState('left')
+  var buttonAudio = new Howl({ src: '/audio/fx/buttonpress.mp3' })
+  var lightAudio = new Howl({ src:'/audio/fx/lightson.mp3' })
 
   useEffect(() => {
       document.body.style.cursor = hovered ? 'pointer' : 'auto' 
@@ -56,12 +62,34 @@ export default function Jukebox(props) {
     if (zoomed) {
       const step = 0.04
       // state.camera.rotateOnAxis(rot, 2.0)
-      state.camera.position.lerp(vec.set(0, 1.05, 1.8, 0.1), step)
-      state.camera.updateProjectionMatrix()
+      
+      // state.camera.position.lerp(vec.set(0.11, 1.00, 1.1, 0.1), step)
+      
+      // state.camera.position.lerp(vec.set(-0.11, 1.00, 1.1, 0.1), step)
+      if (activePanel === 'left') {
+          console.log(activePanel)
+          state.camera.position.lerp(vec.set(-0.11, 1.00, 1.1, 0.1), step)
+          state.camera.updateProjectionMatrix()
+      } else if (activePanel === 'right') {
+          console.log(activePanel)
+          state.camera.position.lerp(vec.set(0.11, 1.00, 1.1, 0.1), step)
+          state.camera.updateProjectionMatrix()
+      }
     }
   })
 
+  function handleNavButtonClick(direction) {
+    if (direction === 'go-left') {
+          console.log('going to the left', direction)
+          setActivePanel('left')
+      } else if (direction === 'go-right') {
+          console.log('going to the right', direction)
+          setActivePanel('right')
+      }
+  }
+
   function handleSongButtonClick(num) {
+    buttonAudio.play()
     switch (num) {
       case(1):
         console.log(songButton1.current.material)
@@ -319,6 +347,7 @@ export default function Jukebox(props) {
   }
 
   function handleOnButtonClick() { 
+    lightAudio.play()
     gsap.to(onbutton.current.material, { emissiveIntensity: 1.5 })
     gsap.to(jukeboxYellowLights.current.material, { emissiveIntensity: 1.5 })
     gsap.to(jukeboxRedLights.current.material, { emissiveIntensity: 1.5 })
@@ -327,7 +356,7 @@ export default function Jukebox(props) {
       setZoomed(true)
     }, 750)
   }
-  return (
+  return (<>
     <group {...props} dispose={null} scale={ props.scale } position={ props.position }>
       <group rotation={[-Math.PI / 2, 0, 0]}>
         <mesh
@@ -467,101 +496,100 @@ export default function Jukebox(props) {
           color={ onButtonActive ? '#00ff00' : '#00ff00' }
         />
     </mesh>
-      <mesh
+    <mesh
         castShadow
         receiveShadow
         geometry={nodes.song_panel.geometry}
-        material={nodes.song_panel.material}
+        material={materials.EmptyButton}
         position={[-5.286, 30.003, 24.18]}
         rotation={[-0.529, 0, 0]}
       />
       <mesh
         castShadow
         receiveShadow
+        geometry={nodes.song_panel012.geometry}
+        material={materials.EmptyButton}
+        position={[-5.286, 28.33, 24.18]}
+        rotation={[-0.529, 0, 0]}
+      />
+      <mesh
+        castShadow
+        receiveShadow
         geometry={nodes.song_panel001.geometry}
-        material={nodes.song_panel001.material}
-        position={[-5.286, 28.336, 24.18]}
+        material={materials.EmptyButton}
+        position={[-5.286, 26.825, 24.18]}
+        rotation={[-0.529, 0, 0]}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.song_panel013.geometry}
+        material={materials.EmptyButton}
+        position={[-5.286, 25.204, 24.18]}
+        rotation={[-0.529, 0, 0]}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.song_panel014.geometry}
+        material={materials.EmptyButton}
+        position={[-5.286, 23.557, 24.18]}
+        rotation={[-0.529, 0, 0]}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.song_panel015.geometry}
+        material={materials.EmptyButton}
+        position={[-5.286, 21.962, 24.18]}
         rotation={[-0.529, 0, 0]}
       />
       <mesh
         castShadow
         receiveShadow
         geometry={nodes.song_panel002.geometry}
-        material={nodes.song_panel002.material}
-        position={[-5.286, 26.809, 24.18]}
-        rotation={[-0.529, 0, 0]}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.song_panel003.geometry}
-        material={nodes.song_panel003.material}
-        
-        position={[-5.286, 25.194, 24.18]}
-        rotation={[-0.529, 0, 0]}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.song_panel004.geometry}
-        material={nodes.song_panel004.material}
-        position={[-5.286, 23.601, 24.18]}
-        rotation={[-0.529, 0, 0]}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.song_panel005.geometry}
-        material={nodes.song_panel005.material}
-        position={[-5.286, 22.008, 24.18]}
-        rotation={[-0.529, 0, 0]}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.song_panel006.geometry}
-        material={nodes.song_panel006.material}
+        material={materials["SoundsLikeTheRadio.001"]}
         position={[4.643, 30.003, 24.18]}
         rotation={[-0.529, 0, 0]}
       />
       <mesh
         castShadow
         receiveShadow
-        geometry={nodes.song_panel007.geometry}
-        material={nodes.song_panel007.material}
-        position={[4.643, 28.336, 24.18]}
+        geometry={nodes.song_panel003.geometry}
+        material={materials.TheresThesun}
+        position={[4.643, 28.33, 24.18]}
         rotation={[-0.529, 0, 0]}
       />
       <mesh
         castShadow
         receiveShadow
-        geometry={nodes.song_panel008.geometry}
-        material={nodes.song_panel008.material}
-        position={[4.643, 26.809, 24.18]}
+        geometry={nodes.song_panel004.geometry}
+        material={materials.ColdBeerAndCountryMusic}
+        position={[4.643, 26.825, 24.18]}
         rotation={[-0.529, 0, 0]}
       />
       <mesh
         castShadow
         receiveShadow
-        geometry={nodes.song_panel009.geometry}
-        material={nodes.song_panel009.material}
-        position={[4.643, 25.194, 24.18]}
+        geometry={nodes.song_panel005.geometry}
+        material={materials.BadLuck}
+        position={[4.643, 25.204, 24.18]}
         rotation={[-0.529, 0, 0]}
       />
       <mesh
         castShadow
         receiveShadow
-        geometry={nodes.song_panel010.geometry}
-        material={nodes.song_panel010.material}
-        position={[4.643, 23.601, 24.18]}
+        geometry={nodes.song_panel016.geometry}
+        material={materials.BackToYou}
+        position={[4.643, 23.557, 24.18]}
         rotation={[-0.529, 0, 0]}
       />
       <mesh
         castShadow
         receiveShadow
-        geometry={nodes.song_panel011.geometry}
-        material={nodes.song_panel011.material}
-        position={[4.643, 22.008, 24.18]}
+        geometry={nodes.song_panel017.geometry}
+        material={materials.JustaJonsin}
+        position={[4.643, 21.962, 24.18]}
         rotation={[-0.529, 0, 0]}
       />
       <mesh
@@ -792,7 +820,19 @@ export default function Jukebox(props) {
         />
       </mesh>
     </group>
+
+        {/* Go Left */}
+        <mesh scale={[ 0.125, 0.035, 0.05 ]} position={[ -0.101, 0.664, 0.495 ]} ref={ leftNavButton } onClick={ () => handleNavButtonClick('go-right')}>
+            <boxGeometry />
+            <meshBasicMaterial color={ '#ff00ff' } />
+        </mesh>
+        {/* Go Right */}
+        <mesh scale={[ 0.125, 0.035, 0.05 ]} position={[ 0.101, 0.664, 0.495]} ref={ rightNavButton } onClick={ () => handleNavButtonClick('go-left')}>
+            <boxGeometry />
+            <meshBasicMaterial color={ '#ff00ff' } />
+        </mesh>
+        </>
   );
 }
 
-useGLTF.preload("./jukebox-v2.glb");
+useGLTF.preload("./jukebox-v3.glb");
