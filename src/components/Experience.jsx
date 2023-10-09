@@ -78,9 +78,9 @@ export default function Experience({ cameraPosition, switchCameraPosition }) {
         <Sparkles 
             count={ 50 }
             speed={ 0.75 }
-            opacity={ 1 }
+            opacity={ 0.25 }
             color={ '#fdde73' }
-            size={ 2.5 }
+            size={ 1.5 }
             scale={[ 2.5, 4, 3 ]}
             position={[ 0, .5, 0.25 ]}
             noise={[ 0.5, 5, 0 ]}

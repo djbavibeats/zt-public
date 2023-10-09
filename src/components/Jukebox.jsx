@@ -10,7 +10,7 @@ import { Howl, Howler } from 'howler'
 import { gsap } from "gsap/gsap-core"
 
 export default function Jukebox(props) {
-  const { nodes, materials } = useGLTF("./jukebox-v3.glb")
+  const { nodes, materials } = useGLTF("./jukebox-v4.glb")
   const [ hovered, setHovered ] = useState(false)
   const [ songHovered, setSongHovered ] = useState(false)
   const [ zoomed, setZoomed ] = useState(false)
@@ -46,12 +46,31 @@ export default function Jukebox(props) {
   const leftNavButton = useRef()
   const rightNavButton = useRef()
   const [ activePanel, setActivePanel ] = useState('left')
+  const [ isMobileDevice, setMobileDevice ] = useState(false)
+  const [width, setWidth] = useState(window.innerWidth)
   var buttonAudio = new Howl({ src: '/audio/fx/buttonpress.mp3' })
   var lightAudio = new Howl({ src:'/audio/fx/lightson.mp3' })
 
   useEffect(() => {
       document.body.style.cursor = hovered ? 'pointer' : 'auto' 
   }, [hovered])
+
+  useEffect(() => {
+      console.log(width)
+      if (width < 768) {
+        setMobileDevice(true)
+      } else {
+        setMobileDevice(false)
+      }
+      window.addEventListener('resize', handleWindowSizeChange)
+      return () => {
+          window.removeEventListener('resize', handleWindowSizeChange)
+      }
+  }, [])
+
+  function handleWindowSizeChange() {
+    setWidth(window.innerWidth)
+  }
 
   var rotVar = 0.0
 
@@ -63,30 +82,23 @@ export default function Jukebox(props) {
       const step = 0.04
       // state.camera.rotateOnAxis(rot, 2.0)
       
-      // state.camera.position.lerp(vec.set(0.11, 1.00, 1.1, 0.1), step)
+      if (!isMobileDevice) {
+        state.camera.position.lerp(vec.set(0.0, 1.00, 1.1, 0.1), step)
+      } else {
+        if (activePanel === 'left') {
+            console.log(activePanel)
+            state.camera.position.lerp(vec.set(-0.11, 1.00, 1.1, 0.1), step)
+            state.camera.updateProjectionMatrix()
+        } else if (activePanel === 'right') {
+            console.log(activePanel)
+            state.camera.position.lerp(vec.set(0.11, 1.00, 1.1, 0.1), step)
+            state.camera.updateProjectionMatrix()
+        }
+      }
       
       // state.camera.position.lerp(vec.set(-0.11, 1.00, 1.1, 0.1), step)
-      if (activePanel === 'left') {
-          console.log(activePanel)
-          state.camera.position.lerp(vec.set(-0.11, 1.00, 1.1, 0.1), step)
-          state.camera.updateProjectionMatrix()
-      } else if (activePanel === 'right') {
-          console.log(activePanel)
-          state.camera.position.lerp(vec.set(0.11, 1.00, 1.1, 0.1), step)
-          state.camera.updateProjectionMatrix()
-      }
     }
   })
-
-  function handleNavButtonClick(direction) {
-    if (direction === 'go-left') {
-          console.log('going to the left', direction)
-          setActivePanel('left')
-      } else if (direction === 'go-right') {
-          console.log('going to the right', direction)
-          setActivePanel('right')
-      }
-  }
 
   function handleSongButtonClick(num) {
     buttonAudio.play()
@@ -485,8 +497,6 @@ export default function Jukebox(props) {
         geometry={nodes.on_button.geometry}
         material={materials["on-button"]}
         position={[21.768, 12.311, 24.096]}
-        onPointerOver={() => setHovered(true) }
-        onPointerOut={() => setHovered(false) }
         onClick={ handleOnButtonClick }
       >
         <meshStandardMaterial 
@@ -495,6 +505,19 @@ export default function Jukebox(props) {
           toneMapped={ false }
           color={ onButtonActive ? '#00ff00' : '#00ff00' }
         />
+    </mesh>
+    <mesh
+      position={[ 21.768, 11, 24.096 ]}
+      scale={[ 10, 11 , 1 ]} 
+      visible={ false }
+      onPointerOver={() => setHovered(true) }
+      onPointerOut={() => setHovered(false) }
+      onClick={() => {
+        console.log('nvisib')
+      }}
+    >
+      <boxGeometry />
+
     </mesh>
     <mesh
         castShadow
@@ -819,20 +842,54 @@ export default function Jukebox(props) {
             color={ songButton12Active ? '#C23827' : '#ff0000' }
         />
       </mesh>
+      { isMobileDevice &&
+        <>
+          <group position={[-4.837, 19.461, 25.297]} 
+            onClick={ () => {
+                setActivePanel('right')
+                buttonAudio.play()
+            } }
+            ref={ leftNavButton }
+            >
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.Cube_1.geometry}
+              material={materials.ArrowButtonOne}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.Cube_2.geometry}
+              material={materials["Arrow Color"]}
+            />
+          </group>
+          <group position={[5.605, 19.461, 25.297]}
+            onClick={ () => { 
+                setActivePanel('left')
+                buttonAudio.play()
+            }}
+            // ref={ rightNavButton }
+          >
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.Cube004.geometry}
+              material={materials.ArrowButtonOne}
+              // ref={ leftNavButton }
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.Cube004_1.geometry}
+              material={materials["Arrow Color"]}
+            />
+          </group>
+        </>
+      }
     </group>
-
-        {/* Go Left */}
-        <mesh scale={[ 0.125, 0.035, 0.05 ]} position={[ -0.101, 0.664, 0.495 ]} ref={ leftNavButton } onClick={ () => handleNavButtonClick('go-right')}>
-            <boxGeometry />
-            <meshBasicMaterial color={ '#ff00ff' } />
-        </mesh>
-        {/* Go Right */}
-        <mesh scale={[ 0.125, 0.035, 0.05 ]} position={[ 0.101, 0.664, 0.495]} ref={ rightNavButton } onClick={ () => handleNavButtonClick('go-left')}>
-            <boxGeometry />
-            <meshBasicMaterial color={ '#ff00ff' } />
-        </mesh>
         </>
   );
 }
 
-useGLTF.preload("./jukebox-v3.glb");
+useGLTF.preload("./jukebox-v4.glb");
