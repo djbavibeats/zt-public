@@ -36,7 +36,7 @@ export default function Experience({ cameraPosition, switchCameraPosition }) {
 
     return (<>
         <Perf position="top-left" />
-        <OrbitControls makeDefault />
+        {/* <OrbitControls makeDefault /> */}
 
         <color args={ [ 'black' ] } attach="background" />
 
