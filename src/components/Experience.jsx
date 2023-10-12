@@ -1,16 +1,15 @@
-import { useLoader, useFrame } from '@react-three/fiber'
-import { useRef, useState } from 'react'
+import { useLoader } from '@react-three/fiber'
+import { useRef } from 'react'
 import { Perf } from 'r3f-perf'
-import { useControls } from 'leva'
 import { TextureLoader } from 'three/src/loaders/TextureLoader'
 
-import { useHelper, OrbitControls, Environment, Backdrop, Sparkles } from '@react-three/drei'
+import { Environment, Backdrop, Sparkles, BakeShadows } from '@react-three/drei'
 import * as THREE from 'three'
 
 import Jukebox from './Jukebox'
 
 
-export default function Experience({ cameraPosition, switchCameraPosition }) {
+export default function Experience() {
     const directionalLight = useRef()
     const backLight = useRef()
     const [ colorMap, displacementMap, normalMap, roughnessMap ] = useLoader(TextureLoader, [
@@ -35,14 +34,12 @@ export default function Experience({ cameraPosition, switchCameraPosition }) {
     roughnessMap.repeat.set(8, 8)
 
     return (<>
-        <Perf position="top-left" />
-        {/* <OrbitControls makeDefault /> */}
+        {/* <Perf position="top-left" /> */}
 
         <color args={ [ 'black' ] } attach="background" />
+        <BakeShadows />
 
-        <Environment 
-            preset="night"
-        />
+        <Environment preset="night" />
 
         <directionalLight
             position={[ 0, .312, - 2.5 ] }
@@ -51,28 +48,21 @@ export default function Experience({ cameraPosition, switchCameraPosition }) {
             color={ '#00abff' }
             ref={ backLight }
             castShadow
-            shadow-mapSize={ [ 1024, 1024 ] }
+            shadow-mapSize={ [ 512, 512 ] }
             shadow-camera-near={ 1 }
-            shadow-camera-far={ 10 }
-            shadow-camera-top={ 5 }
-            shadow-camera-right={ 5 }
-            shadow-camera-bottom={ - 5 }
-            shadow-camera-left={ - 5 }
+            shadow-camera-far={ 6.5 }
+            shadow-camera-top={ 2 }
+            shadow-camera-right={ 1 }
+            shadow-camera-bottom={ - 2 }
+            shadow-camera-left={ -1 }
         />
 
         <directionalLight
             ref={ directionalLight }
+            castShadow={ false }
             position={ [ 0, 3, 1 ] }
-            intensity={ 0.5 }
+            intensity={ 0.75 }
             color={ "#ffffff" }
-            castShadow
-            shadow-mapSize={ [ 1024, 1024 ] }
-            shadow-camera-near={ 1 }
-            shadow-camera-far={ 10 }
-            shadow-camera-top={ 5 }
-            shadow-camera-right={ 5 }
-            shadow-camera-bottom={ - 5 }
-            shadow-camera-left={ - 5 }
         />
         <ambientLight intensity={ 0.25 } />
         <Sparkles 
@@ -91,7 +81,7 @@ export default function Experience({ cameraPosition, switchCameraPosition }) {
         />
         <Backdrop position={[ 0, -1 - 0.30, -15 ]} scale={[ 50, 10, 10 ]}>
             <meshStandardMaterial color="#3e3131" />
-            </Backdrop>
+        </Backdrop>
         <mesh receiveShadow rotation-x={ - Math.PI * 0.5 } position-y={ - 1 - .30 } scale={[ 35, 15, 15 ]}>
             <planeGeometry 
             />
