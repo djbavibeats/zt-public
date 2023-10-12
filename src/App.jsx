@@ -27,14 +27,16 @@ function App() {
     <>
       <Header />
       { showInstructions &&
-        <div className="absolute z-40 text-center p-8 h-screen w-full bg-[rgba(0,0,0,0.75)] flex-col text-white flex justify-center items-center max-w-[500px]">
-          <p className="text-2xl font-bold mb-4">Welcome to Zach Top Radio!</p>
-          <p className="mb-4">Turn on the Jukebox by pressing the big green button and tune into some of your
-            (soon to be) favorite Zach Top hits!
-          </p>
-          <button onClick={ beginExperience } className="border-2 rounded-xl py-2 px-4 w-64">
-            <p className="leading-8 font-bold">START</p>
-          </button>
+        <div className="absolute z-40 text-center p-8 h-screen w-full bg-[rgba(0,0,0,0.75)] flex-col text-white flex justify-center items-center">
+          <div className="max-w-[500px]">
+            <p className="text-2xl font-bold mb-4">Welcome to Zach Top Radio!</p>
+            <p className="mb-4">Turn on the Jukebox by pressing the big green button and tune into some of your
+              (soon to be) favorite Zach Top hits!
+            </p>
+            <button onClick={ beginExperience } className="border-2 rounded-xl py-2 px-4 w-64">
+              <p className="leading-8 font-bold">START</p>
+            </button>
+          </div>
         </div>
       }
       <Canvas
