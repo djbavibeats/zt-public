@@ -3,7 +3,7 @@ import { useRef } from 'react'
 import { Perf } from 'r3f-perf'
 import { TextureLoader } from 'three/src/loaders/TextureLoader'
 
-import { Environment, Backdrop, Sparkles, BakeShadows } from '@react-three/drei'
+import { Environment, Backdrop, Sparkles, BakeShadows, OrbitControls } from '@react-three/drei'
 import * as THREE from 'three'
 
 import Jukebox from './Jukebox'
@@ -38,6 +38,7 @@ export default function Experience() {
 
         <color args={ [ 'black' ] } attach="background" />
         <BakeShadows />
+        {/* <OrbitControls /> */}
 
         <Environment preset="night" />
 
