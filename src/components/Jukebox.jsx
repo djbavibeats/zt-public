@@ -158,7 +158,6 @@ export default function Jukebox(props) {
 
   function handleSongEnd(num) {
     console.log(num, playingAllSongs)
-      audioArray.current[num].unload()
       switch(num) {
         case(0):
           if (playingAllSongs === true) {
@@ -498,7 +497,7 @@ export default function Jukebox(props) {
     gsap.to(jukeboxYellowLights.current.material, { emissiveIntensity: 1.5 })
     gsap.to(jukeboxRedLights.current.material, { emissiveIntensity: 1.5 })
     setTimeout(() => {
-      // handleSongButtonClick(1)
+      handleSongButtonClick(1)
       setOnButtonActive(true)
       setZoomed(true)
     }, 750)
@@ -513,8 +512,6 @@ export default function Jukebox(props) {
     audioArray.current.map(song => { song.stop() })
   }, [ props.reset ])
 
-  function reset() {
-  }
   return (<>
     <group {...props} dispose={null} scale={ props.scale } position={ props.position }>
       <group rotation={[-Math.PI / 2, 0, 0]}>
