@@ -67,13 +67,13 @@ export default function Jukebox(props) {
   // const [ playingAllSongs, setPlayingAllSongs ] = useState(false)
 
   const audioArray = useRef([
-    new Howl({ src: './audio/spoken/intro.mp3', html5: true, preload: true, onend: () => handleSongEnd(0) }),
-    new Howl({ src:  './audio/songs/sounds-like-the-radio.mp3', html5: true, preload: true, onend: () => handleSongEnd(1) }),
-    new Howl({ src:  './audio/songs/theres-the-sun.mp3', html5: true, preload: true, onend: () => handleSongEnd(2) }),
-    new Howl({ src:  './audio/songs/cold-beer-and-country-music.mp3', html5: true, preload: true, onend: () => handleSongEnd(3) }),
-    new Howl({ src:  './audio/songs/bad-luck.mp3', html5: true, preload: true, onend: () => handleSongEnd(4) }),
-    new Howl({ src: './audio/songs/back-to-you.mp3', html5: true, preload: true, onend: () => handleSongEnd(5) }),
-    new Howl({ src: './audio/songs/justa-jonesin.mp3', html5: true, preload: true, onend: () => handleSongEnd(6)})
+    new Howl({ src: './audio/spoken/intro.mp3',  preload: true, onend: () => handleSongEnd(0) }),
+    new Howl({ src:  './audio/songs/sounds-like-the-radio.mp3',  preload: true, onend: () => handleSongEnd(1) }),
+    new Howl({ src:  './audio/songs/theres-the-sun.mp3',  preload: true, onend: () => handleSongEnd(2) }),
+    new Howl({ src:  './audio/songs/cold-beer-and-country-music.mp3',  preload: true, onend: () => handleSongEnd(3) }),
+    new Howl({ src:  './audio/songs/bad-luck.mp3',  preload: true, onend: () => handleSongEnd(4) }),
+    new Howl({ src: './audio/songs/back-to-you.mp3',  preload: true, onend: () => handleSongEnd(5) }),
+    new Howl({ src: './audio/songs/justa-jonesin.mp3',  preload: true, onend: () => handleSongEnd(6)})
   ])
   
 
@@ -83,6 +83,14 @@ export default function Jukebox(props) {
   useEffect(() => {
       document.body.style.cursor = hovered ? 'pointer' : 'auto' 
   }, [hovered])
+
+  useEffect(() => { console.log('Intro: ' + audioArray.current[0].state()) }, [ audioArray.current[0].state() ])
+  useEffect(() => { console.log('Sounds Like The Radio: ' + audioArray.current[1].state()) }, [ audioArray.current[1].state() ])
+  useEffect(() => { console.log('Theres The Sun: ' + audioArray.current[2].state()) }, [ audioArray.current[2].state() ])
+  useEffect(() => { console.log('Cold Beer & Country Music: ' + audioArray.current[3].state()) }, [ audioArray.current[3].state() ])
+  useEffect(() => { console.log('Bad Luck: ' + audioArray.current[4].state()) }, [ audioArray.current[4].state() ])
+  useEffect(() => { console.log('Back To You: ' + audioArray.current[5].state()) }, [ audioArray.current[5].state() ])
+  useEffect(() => { console.log('Justa Jonesin: ' + audioArray.current[6].state()) }, [ audioArray.current[6].state() ])
 
   useEffect(() => {
     console.log('updating', playingAllSongs)
@@ -130,6 +138,7 @@ export default function Jukebox(props) {
   function playNewSong(pos) {
     console.log("Playing Song: " + pos)
     console.log(audioArray)
+    // audioArray.current[activeAudio].unload()
     audioArray.current.map((song, index) => {
       if (index === pos) {
         // song.seek(213)
