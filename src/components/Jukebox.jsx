@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react"
-import { useGLTF } from "@react-three/drei"
+import { useGLTF, Html } from "@react-three/drei"
 import { useFrame } from "@react-three/fiber"
 import * as THREE from 'three'
 import { Howl } from 'howler'
@@ -75,7 +75,6 @@ export default function Jukebox(props) {
     new Howl({ src: './audio/songs/back-to-you.mp3',  preload: true, onend: () => handleSongEnd(5) }),
     new Howl({ src: './audio/songs/justa-jonesin.mp3',  preload: true, onend: () => handleSongEnd(6)})
   ])
-  
 
   var buttonAudio = new Howl({ src: '/audio/fx/buttonpress.mp3' })
   var lightAudio = new Howl({ src:'/audio/fx/lightson.mp3' })
@@ -84,13 +83,27 @@ export default function Jukebox(props) {
       document.body.style.cursor = hovered ? 'pointer' : 'auto' 
   }, [hovered])
 
-  useEffect(() => { console.log('Intro: ' + audioArray.current[0].state()) }, [ audioArray.current[0].state() ])
-  useEffect(() => { console.log('Sounds Like The Radio: ' + audioArray.current[1].state()) }, [ audioArray.current[1].state() ])
-  useEffect(() => { console.log('Theres The Sun: ' + audioArray.current[2].state()) }, [ audioArray.current[2].state() ])
-  useEffect(() => { console.log('Cold Beer & Country Music: ' + audioArray.current[3].state()) }, [ audioArray.current[3].state() ])
-  useEffect(() => { console.log('Bad Luck: ' + audioArray.current[4].state()) }, [ audioArray.current[4].state() ])
-  useEffect(() => { console.log('Back To You: ' + audioArray.current[5].state()) }, [ audioArray.current[5].state() ])
-  useEffect(() => { console.log('Justa Jonesin: ' + audioArray.current[6].state()) }, [ audioArray.current[6].state() ])
+  useEffect(() => { 
+    console.log('Intro: ' + audioArray.current[0].state()) 
+  }, [ audioArray.current[0].state() ])
+  useEffect(() => { 
+    console.log('Sounds Like The Radio: ' + audioArray.current[1].state()) 
+  }, [ audioArray.current[1].state() ])
+  useEffect(() => { 
+    console.log('Theres The Sun: ' + audioArray.current[2].state()) 
+  }, [ audioArray.current[2].state() ])
+  useEffect(() => { 
+    console.log('Cold Beer & Country Music: ' + audioArray.current[3].state()) 
+  }, [ audioArray.current[3].state() ])
+  useEffect(() => { 
+    console.log('Bad Luck: ' + audioArray.current[4].state()) 
+  }, [ audioArray.current[4].state() ])
+  useEffect(() => { 
+    console.log('Back To You: ' + audioArray.current[5].state()) 
+  }, [ audioArray.current[5].state() ])
+  useEffect(() => { 
+    console.log('Justa Jonesin: ' + audioArray.current[6].state()) 
+  }, [ audioArray.current[6].state() ])
 
   useEffect(() => {
     console.log('updating', playingAllSongs)
@@ -522,6 +535,17 @@ export default function Jukebox(props) {
   }, [ props.reset ])
 
   return (<>
+    <Html wrapperClass="" fullscreen>
+      <div className="border-2 h-full flex flex-col justify-end items-end">
+        <p>Intro: { audioArray.current[0].state() }</p>
+        <p>Sounds Like The Radio: { audioArray.current[1].state() }</p>
+        <p>There's The Sun: { audioArray.current[2].state() }</p>
+        <p>Cold Beer & Country Music: { audioArray.current[3].state() }</p>
+        <p>Bad Luck: { audioArray.current[4].state() }</p>
+        <p>Back To You: { audioArray.current[5].state() }</p>
+        <p>Justa Jonesin': { audioArray.current[6].state() }</p>
+      </div>
+    </Html>
     <group {...props} dispose={null} scale={ props.scale } position={ props.position }>
       <group rotation={[-Math.PI / 2, 0, 0]}>
         <mesh

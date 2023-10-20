@@ -20,6 +20,7 @@ function Loader() {
 function App() {
   const [ showInstructions, setShowInstructions ] = useState(true)
   const [ reset, doReset ] = useState(0)
+  
 
   function beginExperience() {
     setShowInstructions(false)
