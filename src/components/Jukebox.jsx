@@ -535,8 +535,8 @@ export default function Jukebox(props) {
   }, [ props.reset ])
 
   return (<>
-    <Html wrapperClass="" fullscreen>
-      <div className="border-2 h-full flex flex-col justify-end items-end">
+    <Html wrapperClass="w-full z-10" fullscreen  zIndexRange={[ 10, 0 ]}>
+      <div className="absolute bottom-0 right-0 h-full flex flex-col justify-end items-end">
         <p>Intro: { audioArray.current[0].state() }</p>
         <p>Sounds Like The Radio: { audioArray.current[1].state() }</p>
         <p>There's The Sun: { audioArray.current[2].state() }</p>
