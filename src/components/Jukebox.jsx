@@ -535,7 +535,7 @@ export default function Jukebox(props) {
   }, [ props.reset ])
 
   return (<>
-    <Html wrapperClass="w-full z-10" fullscreen  zIndexRange={[ 10, 0 ]}>
+    {/* <Html wrapperClass="w-full z-10" fullscreen  zIndexRange={[ 10, 0 ]}>
       <div className="absolute bottom-0 right-0 h-full flex flex-col justify-end items-end">
         <p>Intro: { audioArray.current[0].state() }</p>
         <p>Sounds Like The Radio: { audioArray.current[1].state() }</p>
@@ -545,7 +545,7 @@ export default function Jukebox(props) {
         <p>Back To You: { audioArray.current[5].state() }</p>
         <p>Justa Jonesin': { audioArray.current[6].state() }</p>
       </div>
-    </Html>
+    </Html> */}
     <group {...props} dispose={null} scale={ props.scale } position={ props.position }>
       <group rotation={[-Math.PI / 2, 0, 0]}>
         <mesh
