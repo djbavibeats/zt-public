@@ -19,9 +19,15 @@ function Loader() {
 
 function App() {
   const [ showInstructions, setShowInstructions ] = useState(true)
+  const [ reset, doReset ] = useState(0)
 
   function beginExperience() {
     setShowInstructions(false)
+  }
+
+  function handleBackButton() {
+    doReset(prev => prev + 1)
+    setShowInstructions(true)
   }
   return (
     <>
@@ -37,6 +43,12 @@ function App() {
               <p className="leading-8 font-bold">START</p>
             </button>
           </div>
+        </div>
+      }
+      <></>
+      { !showInstructions &&
+        <div>
+          <button  className="absolute bottom-2 left-2 z-50 bg-black text-white p-4" onClick={() => handleBackButton() }>BACK</button>
         </div>
       }
       <Canvas
@@ -59,6 +71,7 @@ function App() {
           />
       </EffectComposer>
         <Experience 
+          reset={ reset }
         />
         </Suspense>
       </Canvas>

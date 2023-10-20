@@ -9,7 +9,7 @@ import * as THREE from 'three'
 import Jukebox from './Jukebox'
 
 
-export default function Experience() {
+export default function Experience(props) {
     const directionalLight = useRef()
     const backLight = useRef()
     const [ colorMap, displacementMap, normalMap, roughnessMap ] = useLoader(TextureLoader, [
@@ -32,6 +32,7 @@ export default function Experience() {
     displacementMap.repeat.set(8, 8)
     normalMap.repeat.set(8, 8)
     roughnessMap.repeat.set(8, 8)
+
 
     return (<>
         {/* <Perf position="top-left" /> */}
@@ -79,6 +80,7 @@ export default function Experience() {
         <Jukebox 
             position={[ 0, .5749 - .30, 0 ]}
             scale={[ 0.02, 0.02, 0.02 ]}
+            reset={ props.reset }
         />
         <Backdrop position={[ 0, -1 - 0.30, -15 ]} scale={[ 50, 10, 10 ]}>
             <meshStandardMaterial color="#3e3131" />

@@ -5,6 +5,9 @@ export default {
     "./src/**/*.{js,jsx,ts,tsx}"
   ],
   theme: {
+    fontFamily: {
+      sans: [ 'Bookman Old Style' ]
+    },
     extend: {},
   },
   plugins: [],
