@@ -6,11 +6,12 @@ import React, { useState, useEffect, useRef } from "react"
 import { useGLTF, useTexture, Html } from "@react-three/drei"
 import { useFrame } from "@react-three/fiber"
 import * as THREE from 'three'
-import { Howl } from 'howler'
+import { Howl, Howler } from 'howler'
 import { gsap } from "gsap/gsap-core"
 
 
 var songAudio = new Howl({ src: '/audio/songs/sounds-like-the-radio.mp3' })
+
 
 import EmptyButton from './buttons/EmptyButton.jsx'
 
@@ -69,12 +70,30 @@ export default function Jukebox(props) {
 
   const [ audioLoading, setAudioLoading ] = useState(true)
   const [ firstSongPlayed, setFirstSongPlayed ] = useState(false)
+  const [ audioPaused, setAudioPaused ] = useState(false)
+  const [ activeAudio, setActiveAudio ] = useState(0)
+  const [ playingAll, setPlayingAll ] = useState(false)
+
+  const audioArray = [
+    new Howl({ src: './audio/spoken/intro.mp3', html5: true, preload: true, onend: () => handleSongEnd(0) }),
+    new Howl({ src:  './audio/songs/sounds-like-the-radio.mp3', html5: true, preload: true, onend: () => handleSongEnd(1) }),
+    new Howl({ src:  './audio/songs/theres-the-sun.mp3', html5: true, preload: true, onend: () => handleSongEnd(2) }),
+    new Howl({ src:  './audio/songs/cold-beer-and-country-music.mp3', html5: true, preload: true, onend: () => handleSongEnd(3) }),
+    new Howl({ src:  './audio/songs/bad-luck.mp3', html5: true, preload: true, onend: () => handleSongEnd(4) }),
+    new Howl({ src: './audio/songs/back-to-you.mp3', html5: true, preload: true, onend: () => handleSongEnd(5) }),
+    new Howl({ src: './audio/songs/justa-jonesin.mp3', html5: true, preload: true, onend: () => handleSongEnd(6)})
+  ]
+
   var buttonAudio = new Howl({ src: '/audio/fx/buttonpress.mp3' })
   var lightAudio = new Howl({ src:'/audio/fx/lightson.mp3' })
 
   useEffect(() => {
       document.body.style.cursor = hovered ? 'pointer' : 'auto' 
   }, [hovered])
+
+  useEffect(() => {
+    console.log('udpating playing all', playingAll)
+  }, [ playingAll ])
 
   useEffect(() => {
       if (width < 768) {
@@ -114,15 +133,116 @@ export default function Jukebox(props) {
     }
   })
 
-  useEffect(() => {
-    console.log(songAudio.state())
-    if (songAudio.state() === 'loaded' && firstSongPlayed) {
-      songAudio.play()
-      setAudioLoading(false)
-    } else {
-      setAudioLoading(true)
+  function playNewSong(pos) {
+    console.log("Playing Song: " + pos)
+    audioArray.map((song, index) => {
+      if (index === pos) {
+        // song.seek(213)
+        song.play()
+        setActiveAudio(pos)
+        setAudioPaused(false)
+      } else {
+        song.stop()
+      }
+      
+    })
+  }
+
+  var playingAllSongs = false
+
+  function playAllSongs() {
+      playingAllSongs = true
+      audioArray.map(song => {
+          song.stop()
+      })
+      setTimeout(() => {
+        handleSongButtonClick(7)
+      }, 1000)
+    
+  }
+
+  function handleSongEnd(num) {
+    console.log(num, playingAll)
+      switch(num) {
+        case(0):
+          if (playingAllSongs === true) {
+             handleSongButtonClick(7)
+          } else {
+            gsap.to(songButton1.current.material, { emissiveIntensity: 0.0 })
+            setSongButton1Active(false)
+          }
+          break
+        case(1):
+          if (playingAllSongs === true) {
+            handleSongButtonClick(8)
+         } else {
+           gsap.to(songButton7.current.material, { emissiveIntensity: 0.0 })
+           setSongButton7Active(false)
+         }
+          break
+        case(2):
+          if (playingAllSongs === true) {
+            handleSongButtonClick(9)
+          } else {
+            gsap.to(songButton8.current.material, { emissiveIntensity: 0.0 })
+            setSongButton8Active(false)
+          }
+          break
+        case(3):
+          if (playingAllSongs === true) {
+            handleSongButtonClick(10)
+          } else {
+            gsap.to(songButton9.current.material, { emissiveIntensity: 0.0 })
+            setSongButton9Active(false)
+          }
+          break
+        case(4):
+          if (playingAllSongs === true) {
+            handleSongButtonClick(11)
+          } else {
+            gsap.to(songButton10.current.material, { emissiveIntensity: 0.0 })
+            setSongButton10Active(false)
+          }
+          break
+        case(5):
+          if (playingAllSongs === true) {
+            handleSongButtonClick(12)
+          } else {
+            gsap.to(songButton11.current.material, { emissiveIntensity: 0.0 })
+            setSongButton11Active(false)
+          }
+          break
+        case(6):
+          console.log('thats all folks!')
+          gsap.to(songButton12.current.material, { emissiveIntensity: 0.0 })
+          setSongButton12Active(false)
+          break
+        default:
+          break
     }
-  }, [songAudio.state() ])
+  }
+
+  function pause(pos) {
+    console.log(activeAudio)
+    console.log(audioPaused)
+    audioArray.map((song, index) => {
+      if (index === activeAudio) {
+        if (audioPaused === false) {
+          song.pause() 
+          setAudioPaused(true)
+        } else {
+          song.play()
+          setAudioPaused(false)
+        }
+      } else {
+        song.stop()
+      }
+    })
+  }
+
+  function showDates() {
+    window.open("https://www.zach-top.com/", "_blank" )
+  }
 
   function handleSongButtonClick(num) {
     buttonAudio.play()
@@ -137,6 +257,7 @@ export default function Jukebox(props) {
           songButton6.current.material, songButton7.current.material, songButton8.current.material, songButton9.current.material,
           songButton10.current.material, songButton11.current.material, songButton12.current.material
         ], { emissiveIntensity: 0.0 })
+        playNewSong(0)
         setSongButton1Active(true)
         setSongButton2Active(false)
         setSongButton3Active(false)
@@ -157,6 +278,7 @@ export default function Jukebox(props) {
           songButton6.current.material, songButton7.current.material, songButton8.current.material, songButton9.current.material,
           songButton10.current.material, songButton11.current.material, songButton12.current.material
         ], { emissiveIntensity: 0.0 })
+        playAllSongs()
         setSongButton1Active(false)
         setSongButton2Active(true)
         setSongButton3Active(false)
@@ -171,24 +293,12 @@ export default function Jukebox(props) {
         setSongButton12Active(false)
         break
       case(3):
-        gsap.to(songButton3.current.material, { emissiveIntensity: 1.5 })
-        gsap.to([
-          songButton1.current.material, songButton2.current.material, songButton4.current.material, songButton5.current.material,
-          songButton6.current.material, songButton7.current.material, songButton8.current.material, songButton9.current.material,
-          songButton10.current.material, songButton11.current.material, songButton12.current.material
-        ], { emissiveIntensity: 0.0 })
-        setSongButton1Active(false)
-        setSongButton2Active(false)
-        setSongButton3Active(true)
-        setSongButton4Active(false)
-        setSongButton5Active(false)
-        setSongButton6Active(false)
-        setSongButton7Active(false)
-        setSongButton8Active(false)
-        setSongButton9Active(false)
-        setSongButton10Active(false)
-        setSongButton11Active(false)
-        setSongButton12Active(false)
+        if (audioPaused) {
+          gsap.to(songButton3.current.material, { emissiveIntensity: 0.0 })
+        } else {
+          gsap.to(songButton3.current.material, { emissiveIntensity: 1.5 })
+        }
+        pause()
         break
       case(4):
         gsap.to(songButton4.current.material, { emissiveIntensity: 1.5 })
@@ -197,6 +307,7 @@ export default function Jukebox(props) {
           songButton6.current.material, songButton7.current.material, songButton8.current.material, songButton9.current.material,
           songButton10.current.material, songButton11.current.material, songButton12.current.material
         ], { emissiveIntensity: 0.0 })
+        showDates()
         setSongButton1Active(false)
         setSongButton2Active(false)
         setSongButton3Active(false)
@@ -211,44 +322,44 @@ export default function Jukebox(props) {
         setSongButton12Active(false)
         break
       case(5):
-        gsap.to(songButton5.current.material, { emissiveIntensity: 1.5 })
-        gsap.to([
-          songButton1.current.material, songButton2.current.material, songButton3.current.material, songButton4.current.material,
-          songButton6.current.material, songButton7.current.material, songButton8.current.material, songButton9.current.material,
-          songButton10.current.material, songButton11.current.material, songButton12.current.material
-        ], { emissiveIntensity: 0.0 })
-        setSongButton1Active(false)
-        setSongButton2Active(false)
-        setSongButton3Active(false)
-        setSongButton4Active(false)
-        setSongButton5Active(true)
-        setSongButton6Active(false)
-        setSongButton7Active(false)
-        setSongButton8Active(false)
-        setSongButton9Active(false)
-        setSongButton10Active(false)
-        setSongButton11Active(false)
-        setSongButton12Active(false)
+        // gsap.to(songButton5.current.material, { emissiveIntensity: 1.5 })
+        // gsap.to([
+        //   songButton1.current.material, songButton2.current.material, songButton3.current.material, songButton4.current.material,
+        //   songButton6.current.material, songButton7.current.material, songButton8.current.material, songButton9.current.material,
+        //   songButton10.current.material, songButton11.current.material, songButton12.current.material
+        // ], { emissiveIntensity: 0.0 })
+        // setSongButton1Active(false)
+        // setSongButton2Active(false)
+        // setSongButton3Active(false)
+        // setSongButton4Active(false)
+        // setSongButton5Active(true)
+        // setSongButton6Active(false)
+        // setSongButton7Active(false)
+        // setSongButton8Active(false)
+        // setSongButton9Active(false)
+        // setSongButton10Active(false)
+        // setSongButton11Active(false)
+        // setSongButton12Active(false)
         break
       case(6):
-        gsap.to(songButton6.current.material, { emissiveIntensity: 1.5 })
-        gsap.to([
-          songButton1.current.material, songButton2.current.material, songButton3.current.material, songButton4.current.material,
-          songButton5.current.material, songButton7.current.material, songButton8.current.material, songButton9.current.material,
-          songButton10.current.material, songButton11.current.material, songButton12.current.material
-        ], { emissiveIntensity: 0.0 })
-        setSongButton1Active(false)
-        setSongButton2Active(false)
-        setSongButton3Active(false)
-        setSongButton4Active(false)
-        setSongButton5Active(false)
-        setSongButton6Active(true)
-        setSongButton7Active(false)
-        setSongButton8Active(false)
-        setSongButton9Active(false)
-        setSongButton10Active(false)
-        setSongButton11Active(false)
-        setSongButton12Active(false)
+        // gsap.to(songButton6.current.material, { emissiveIntensity: 1.5 })
+        // gsap.to([
+        //   songButton1.current.material, songButton2.current.material, songButton3.current.material, songButton4.current.material,
+        //   songButton5.current.material, songButton7.current.material, songButton8.current.material, songButton9.current.material,
+        //   songButton10.current.material, songButton11.current.material, songButton12.current.material
+        // ], { emissiveIntensity: 0.0 })
+        // setSongButton1Active(false)
+        // setSongButton2Active(false)
+        // setSongButton3Active(false)
+        // setSongButton4Active(false)
+        // setSongButton5Active(false)
+        // setSongButton6Active(true)
+        // setSongButton7Active(false)
+        // setSongButton8Active(false)
+        // setSongButton9Active(false)
+        // setSongButton10Active(false)
+        // setSongButton11Active(false)
+        // setSongButton12Active(false)
         break
       case(7):
         gsap.to(songButton7.current.material, { emissiveIntensity: 1.5 })
@@ -257,9 +368,7 @@ export default function Jukebox(props) {
           songButton5.current.material, songButton6.current.material, songButton8.current.material, songButton9.current.material,
           songButton10.current.material, songButton11.current.material, songButton12.current.material
         ], { emissiveIntensity: 0.0 })
-        songAudio.stop()
-        songAudio = new Howl({ src: './audio/songs/sounds-like-the-radio.mp3'})
-        // songAudio.play()
+        playNewSong(1)
         setSongButton1Active(false)
         setSongButton2Active(false)
         setSongButton3Active(false)
@@ -280,9 +389,7 @@ export default function Jukebox(props) {
           songButton5.current.material, songButton6.current.material, songButton7.current.material, songButton9.current.material,
           songButton10.current.material, songButton11.current.material, songButton12.current.material
         ], { emissiveIntensity: 0.0 })
-        songAudio.stop()
-        songAudio = new Howl({ src: './audio/songs/theres-the-sun.mp3'})
-        // songAudio.play()
+        playNewSong(2)
         setSongButton1Active(false)
         setSongButton2Active(false)
         setSongButton3Active(false)
@@ -303,9 +410,7 @@ export default function Jukebox(props) {
           songButton5.current.material, songButton6.current.material, songButton7.current.material, songButton8.current.material,
           songButton10.current.material, songButton11.current.material, songButton12.current.material
         ], { emissiveIntensity: 0.0 })
-        songAudio.stop()
-        songAudio = new Howl({ src: './audio/songs/cold-beer-and-country-music.mp3'})
-        // songAudio.play()
+        playNewSong(3)
         setSongButton1Active(false)
         setSongButton2Active(false)
         setSongButton3Active(false)
@@ -326,9 +431,7 @@ export default function Jukebox(props) {
           songButton5.current.material, songButton6.current.material, songButton7.current.material, songButton8.current.material,
           songButton9.current.material, songButton11.current.material, songButton12.current.material
         ], { emissiveIntensity: 0.0 })
-        songAudio.stop()
-        songAudio = new Howl({ src: './audio/songs/bad-luck.mp3'})
-        // songAudio.play()
+        playNewSong(4)
         setSongButton1Active(false)
         setSongButton2Active(false)
         setSongButton3Active(false)
@@ -349,6 +452,7 @@ export default function Jukebox(props) {
           songButton5.current.material, songButton6.current.material, songButton7.current.material, songButton8.current.material,
           songButton9.current.material, songButton10.current.material, songButton12.current.material
         ], { emissiveIntensity: 0.0 })
+        playNewSong(5)
         setSongButton1Active(false)
         setSongButton2Active(false)
         setSongButton3Active(false)
@@ -369,6 +473,7 @@ export default function Jukebox(props) {
           songButton5.current.material, songButton6.current.material, songButton7.current.material, songButton8.current.material,
           songButton9.current.material, songButton10.current.material, songButton11.current.material
         ], { emissiveIntensity: 0.0 })
+        playNewSong(6)
         setSongButton1Active(false)
         setSongButton2Active(false)
         setSongButton3Active(false)
@@ -391,6 +496,7 @@ export default function Jukebox(props) {
     gsap.to(jukeboxYellowLights.current.material, { emissiveIntensity: 1.5 })
     gsap.to(jukeboxRedLights.current.material, { emissiveIntensity: 1.5 })
     setTimeout(() => {
+      // handleSongButtonClick(1)
       setOnButtonActive(true)
       setZoomed(true)
     }, 750)
