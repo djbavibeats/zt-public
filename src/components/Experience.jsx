@@ -35,7 +35,7 @@ export default function Experience(props) {
 
 
     return (<>
-        <Perf position="top-left" />
+        {/* <Perf position="top-left" /> */}
 
         <color args={ [ 'black' ] } attach="background" />
         <BakeShadows />
