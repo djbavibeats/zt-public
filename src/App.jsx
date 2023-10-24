@@ -53,7 +53,10 @@ function App() {
         </div>
       }
       <Canvas
-        shadows
+        // frameloop="demand"
+        // pixelRatio={ 1 }
+        dpr={ 2 }
+        shadows={ false }
         camera={ {
             fov: 45,
             near: 0.1,
@@ -65,10 +68,12 @@ function App() {
         }}
       >   
       <Suspense fallback={<Loader />}>
-      <EffectComposer>
+      <EffectComposer multisampling={ 4 }>
         <Bloom 
+          mipmapBlur
           luminanceThreshold={ 0.25 }
-          luminanceSmoothing={ 0.75 }
+          // luminanceSmoothing={ 0.75 }
+          intensity={ 0.5 }
           />
       </EffectComposer>
         <Experience 

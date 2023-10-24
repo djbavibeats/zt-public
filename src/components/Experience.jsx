@@ -7,7 +7,7 @@ import { Environment, Backdrop, Sparkles, BakeShadows, OrbitControls } from '@re
 import * as THREE from 'three'
 
 import Jukebox from './Jukebox'
-
+// import JukeboxV3 from './JukeboxV3'
 
 export default function Experience(props) {
     const directionalLight = useRef()
@@ -35,7 +35,7 @@ export default function Experience(props) {
 
 
     return (<>
-        {/* <Perf position="top-left" /> */}
+        <Perf position="top-left" />
 
         <color args={ [ 'black' ] } attach="background" />
         <BakeShadows />
@@ -59,13 +59,13 @@ export default function Experience(props) {
             shadow-camera-left={ -1 }
         />
 
-        <directionalLight
+        {/* <directionalLight
             ref={ directionalLight }
             castShadow={ false }
             position={ [ 0, 3, 1 ] }
             intensity={ 0.75 }
             color={ "#ffffff" }
-        />
+        /> */}
         <ambientLight intensity={ 0.25 } />
         <Sparkles 
             count={ 50 }

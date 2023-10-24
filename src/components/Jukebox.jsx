@@ -5,6 +5,9 @@ import * as THREE from 'three'
 import { Howl } from 'howler'
 import { gsap } from "gsap/gsap-core"
 
+import JukeboxBase from './Base.jsx'
+import Caption from './Caption.jsx'
+
 import EmptyButton from './buttons/EmptyButton.jsx'
 
 import MeetZach from './buttons/left/MeetZach.jsx'
@@ -62,12 +65,12 @@ export default function Jukebox(props) {
   const [width, setWidth] = useState(window.innerWidth)
 
   const [ firstSongPlayed, setFirstSongPlayed ] = useState(false)
+  const [ jukeboxActive, setJukeboxActive ] = useState(false)
   const [ audioPaused, setAudioPaused ] = useState(true)
   const [ activeAudio, setActiveAudio ] = useState(0)
-  // const [ playingAllSongs, setPlayingAllSongs ] = useState(false)
 
   const audioArray = useRef([
-    new Howl({ src: './audio/spoken/intro.mp3', html5: true, preload: true, onend: () => handleSongEnd(0) }),
+    new Howl({ src: './audio/spoken/intro.mp3', html5: true, preload: true, onplay: (e) => { console.log(e) }, onend: () => handleSongEnd(0) }),
     new Howl({ src:  './audio/songs/sounds-like-the-radio.mp3', html5: true, preload: true, onend: () => handleSongEnd(1) }),
     new Howl({ src:  './audio/songs/theres-the-sun.mp3', html5: true, preload: true, onend: () => handleSongEnd(2) }),
     new Howl({ src:  './audio/songs/cold-beer-and-country-music.mp3', html5: true, preload: true, onend: () => handleSongEnd(3) }),
@@ -82,28 +85,6 @@ export default function Jukebox(props) {
   useEffect(() => {
       document.body.style.cursor = hovered ? 'pointer' : 'auto' 
   }, [hovered])
-
-  useEffect(() => { 
-    console.log('Intro: ' + audioArray.current[0].state()) 
-  }, [ audioArray.current[0].state() ])
-  useEffect(() => { 
-    console.log('Sounds Like The Radio: ' + audioArray.current[1].state()) 
-  }, [ audioArray.current[1].state() ])
-  useEffect(() => { 
-    console.log('Theres The Sun: ' + audioArray.current[2].state()) 
-  }, [ audioArray.current[2].state() ])
-  useEffect(() => { 
-    console.log('Cold Beer & Country Music: ' + audioArray.current[3].state()) 
-  }, [ audioArray.current[3].state() ])
-  useEffect(() => { 
-    console.log('Bad Luck: ' + audioArray.current[4].state()) 
-  }, [ audioArray.current[4].state() ])
-  useEffect(() => { 
-    console.log('Back To You: ' + audioArray.current[5].state()) 
-  }, [ audioArray.current[5].state() ])
-  useEffect(() => { 
-    console.log('Justa Jonesin: ' + audioArray.current[6].state()) 
-  }, [ audioArray.current[6].state() ])
 
   useEffect(() => {
     console.log('updating', playingAllSongs)
@@ -150,8 +131,8 @@ export default function Jukebox(props) {
 
   function playNewSong(pos) {
     console.log("Playing Song: " + pos)
-    console.log(audioArray)
-    // audioArray.current[activeAudio].unload()
+    audioArray.current[activeAudio].unload()
+  
     audioArray.current.map((song, index) => {
       if (index === pos) {
         // song.seek(213)
@@ -365,24 +346,6 @@ export default function Jukebox(props) {
         setSongButton12Active(false)
         break
       case(6):
-        // gsap.to(songButton6.current.material, { emissiveIntensity: 1.5 })
-        // gsap.to([
-        //   songButton1.current.material, songButton2.current.material, songButton3.current.material, songButton4.current.material,
-        //   songButton5.current.material, songButton7.current.material, songButton8.current.material, songButton9.current.material,
-        //   songButton10.current.material, songButton11.current.material, songButton12.current.material
-        // ], { emissiveIntensity: 0.0 })
-        // setSongButton1Active(false)
-        // setSongButton2Active(false)
-        // setSongButton3Active(false)
-        // setSongButton4Active(false)
-        // setSongButton5Active(false)
-        // setSongButton6Active(true)
-        // setSongButton7Active(false)
-        // setSongButton8Active(false)
-        // setSongButton9Active(false)
-        // setSongButton10Active(false)
-        // setSongButton11Active(false)
-        // setSongButton12Active(false)
         break
       case(7):
         gsap.to(songButton7.current.material, { emissiveIntensity: 1.5 })
@@ -516,10 +479,9 @@ export default function Jukebox(props) {
   function handleOnButtonClick() { 
     lightAudio.play()
     gsap.to(onbutton.current.material, { emissiveIntensity: 1.5 })
-    gsap.to(jukeboxYellowLights.current.material, { emissiveIntensity: 1.5 })
-    gsap.to(jukeboxRedLights.current.material, { emissiveIntensity: 1.5 })
+    setJukeboxActive(true)
     setTimeout(() => {
-      handleSongButtonClick(1)
+      // handleSongButtonClick(1)
       setOnButtonActive(true)
       setZoomed(true)
     }, 750)
@@ -527,146 +489,18 @@ export default function Jukebox(props) {
 
   useEffect(() => {
     gsap.to(onbutton.current.material, { emissiveIntensity: 0.0 })
-    gsap.to(jukeboxYellowLights.current.material, { emissiveIntensity: 0.4 })
-    gsap.to(jukeboxRedLights.current.material, { emissiveIntensity: 0.4 })
     setOnButtonActive(false)
+    setJukeboxActive(false)
     setZoomed(false)
     audioArray.current.map(song => { song.stop() })
   }, [ props.reset ])
 
   return (<>
-    {/* <Html wrapperClass="w-full z-10" fullscreen  zIndexRange={[ 10, 0 ]}>
-      <div className="absolute bottom-0 right-0 h-full flex flex-col justify-end items-end">
-        <p>Intro: { audioArray.current[0].state() }</p>
-        <p>Sounds Like The Radio: { audioArray.current[1].state() }</p>
-        <p>There's The Sun: { audioArray.current[2].state() }</p>
-        <p>Cold Beer & Country Music: { audioArray.current[3].state() }</p>
-        <p>Bad Luck: { audioArray.current[4].state() }</p>
-        <p>Back To You: { audioArray.current[5].state() }</p>
-        <p>Justa Jonesin': { audioArray.current[6].state() }</p>
-      </div>
-    </Html> */}
+    <Caption audio={ audioArray.current } />
     <group {...props} dispose={null} scale={ props.scale } position={ props.position }>
-      <group rotation={[-Math.PI / 2, 0, 0]}>
-        <mesh
-          castShadow={ false }
-          receiveShadow={ false }
-          geometry={nodes.glass.geometry}
-          material={materials.blinn2SG}
-        />
-        <mesh
-          castShadow={ false }
-          receiveShadow={ false }
-          geometry={nodes.gold_plate.geometry}
-          material={materials.blinn3SG}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.inner.geometry}
-          material={materials.blinn4SG}
-        />
-        <mesh
-          castShadow={ true }
-          receiveShadow={ false }
-          geometry={nodes.jukebox_outer.geometry}
-          material={materials["Wood Case"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow={ false }
-          geometry={nodes.metal001.geometry}
-          material={materials.blinn4SG}
-        >
-            <meshStandardMaterial 
-                roughness={ 0.5 }
-                metalness={ 1.0 }
-                color={ '#DADADA' }
-            />
-        </mesh>
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.metal002.geometry}
-          material={materials.blinn4SG}
-        >
-            <meshStandardMaterial 
-                roughness={ 0.5 }
-                metalness={ 1.0 }
-                color={ '#DADADA' }
-            />
-        </mesh>
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.metal003.geometry}
-          material={materials.blinn4SG}
-        >
-            <meshStandardMaterial 
-                roughness={ 0.5 }
-                metalness={ 1.0 }
-                color={ '#DADADA' }
-            />
-        </mesh>
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_11.geometry}
-          material={materials.blinn4SG}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_12.geometry}
-          material={materials.blinn4SG}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_12001.geometry}
-          material={materials.blinn4SG}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_13.geometry}
-          material={materials.lambert6SG}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.metal.geometry}
-          material={materials.blinn4SG}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Object_14.geometry}
-          material={materials.lambert7SG}
-          ref={ jukeboxYellowLights }
-        >
-            <meshStandardMaterial 
-                emissive={ '#fdde73' }
-                emissiveIntensity={ 0.4 }
-                toneMapped={ false }
-            />
-        </mesh>
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.red_details.geometry}
-        //   material={materials.blinn1SG}
-        ref={ jukeboxRedLights }
-        >
-            <meshStandardMaterial
-                useRef={ redDetails }
-                emissive={ '#ff0000' }
-                emissiveIntensity={ 0.4 }
-                toneMapped={ false }
-            />
-
-        </mesh>
-      </group>
+      <JukeboxBase 
+        isActive={ jukeboxActive }
+      />
       <mesh
         castShadow
         receiveShadow

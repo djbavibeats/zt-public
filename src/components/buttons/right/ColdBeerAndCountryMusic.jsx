@@ -20,8 +20,8 @@ export default function ColdBeerAndCountryMusic(props) {
   return (
     <group {...props} dispose={null} scale={ .9 } position={ props.position } rotation={ props.rotation }>
       <mesh
-        castShadow
-        receiveShadow
+        castShadow={ false }
+        receiveShadow={ false }
         geometry={nodes.Text008.geometry}
         material={materials.TextMaterial}
         position={[0, 0, 0.25]}
@@ -32,8 +32,8 @@ export default function ColdBeerAndCountryMusic(props) {
           <meshStandardMaterial color={ '#000000' } emissive={ '#000000'} emissiveIntensity={ 0 } />
         </mesh>
       <mesh
-        castShadow
-        receiveShadow
+        castShadow={ false }
+        receiveShadow={ false }
         geometry={nodes.Cube014.geometry}
         material={materials.ButtonMaterial}
         ref={ button }
@@ -41,8 +41,8 @@ export default function ColdBeerAndCountryMusic(props) {
           <meshStandardMaterial color={ '#fff6d9' } emissive={ '#fff6d9'} emissiveIntensity={ 0 } />
         </mesh>
       <mesh
-        castShadow
-        receiveShadow
+        castShadow={ false }
+        receiveShadow={ false }
         geometry={nodes.Cube014_1.geometry}
         material={materials.RedTrimMaterial}
         ref={ trim }

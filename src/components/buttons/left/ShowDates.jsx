@@ -22,8 +22,8 @@ export default function ShowDates(props) {
   return (
     <group {...props} dispose={null} scale={ .9 } position={ props.position } rotation={ props.rotation }>
         <mesh
-            castShadow
-            receiveShadow
+            castShadow={ false }
+            receiveShadow={ false }
             geometry={nodes.Cube008.geometry}
             material={materials.ButtonMaterial}
             ref={ button }
@@ -31,8 +31,8 @@ export default function ShowDates(props) {
         <meshStandardMaterial color={ '#fff6d9' } emissive={ '#fff6d9'} emissiveIntensity={ 0 } />
         </mesh>
         <mesh
-            castShadow
-            receiveShadow
+            castShadow={ false }
+            receiveShadow={ false }
             geometry={nodes.Cube008_1.geometry}
             material={materials.RedTrimMaterial}
             ref={ trim }
@@ -40,8 +40,8 @@ export default function ShowDates(props) {
               <meshStandardMaterial color={ '#ff0000' } emissive={ '#ff0000'} emissiveIntensity={ 0 } />
             </mesh>
         <mesh
-            castShadow
-            receiveShadow
+            castShadow={ false }
+            receiveShadow={ false }
             geometry={nodes.Text003.geometry}
             position={[0, 0, 0.25]}
             rotation={[Math.PI / 2, 0, 0]}
