@@ -63,7 +63,7 @@ export default function Caption(audio) {
 
     })
     return(<>
-    <Html center position={[ 0, 0.895, -1]} className="text-center text-red-500 w-screen md:w-[600px]">
+    <Html center position={[ 0, 0.895, 0 ]} className="text-center text-red-500 w-[325px] md:w-[600px]">
         <p>{ introLines[line] }</p>
     </Html>
     </>)
