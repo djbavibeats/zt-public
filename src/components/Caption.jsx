@@ -27,35 +27,35 @@ export default function Caption(audio) {
     }, [ audio ])
 
     useFrame(() => {
-        if (audio.audio[0].seek() > 0.000 && audio.audio[0].seek() < 1.875) {
+        if (audio.audio[0].seek() > 0.000 && audio.audio[0].seek() < 2.075) {
             setLine(0)
-        } else if (audio.audio[0].seek() > 1.876 && audio.audio[0].seek() < 4.660) {
+        } else if (audio.audio[0].seek() > 2.076 && audio.audio[0].seek() < 4.860) {
             setLine(1)
-        } else if (audio.audio[0].seek() > 4.661 && audio.audio[0].seek() < 8.242) {
+        } else if (audio.audio[0].seek() > 4.861 && audio.audio[0].seek() < 8.442) {
             setLine(2)
-        } else if (audio.audio[0].seek() > 8.243 && audio.audio[0].seek() < 11.117) {
+        } else if (audio.audio[0].seek() > 8.443 && audio.audio[0].seek() < 11.317) {
             setLine(3)
-        } else if (audio.audio[0].seek() > 11.118 && audio.audio[0].seek() < 14.158) {
+        } else if (audio.audio[0].seek() > 11.318 && audio.audio[0].seek() < 14.358) {
             setLine(4)
-        } else if (audio.audio[0].seek() > 14.159 && audio.audio[0].seek() < 15.575) {
+        } else if (audio.audio[0].seek() > 14.359 && audio.audio[0].seek() < 15.775) {
             setLine(5)
-        } else if (audio.audio[0].seek() > 15.576 && audio.audio[0].seek() < 18.325) {
+        } else if (audio.audio[0].seek() > 15.776 && audio.audio[0].seek() < 18.525) {
             setLine(6)
-        } else if (audio.audio[0].seek() > 18.326 && audio.audio[0].seek() < 21.408) {
+        } else if (audio.audio[0].seek() > 18.526 && audio.audio[0].seek() < 21.608) {
             setLine(7)
-        } else if (audio.audio[0].seek() > 21.409 && audio.audio[0].seek() < 24.242) {
+        } else if (audio.audio[0].seek() > 21.609 && audio.audio[0].seek() < 24.442) {
             setLine(8)
-        } else if (audio.audio[0].seek() > 24.243 && audio.audio[0].seek() < 26.325) {
+        } else if (audio.audio[0].seek() > 24.443 && audio.audio[0].seek() < 26.525) {
             setLine(9)
-        } else if (audio.audio[0].seek() > 26.326 && audio.audio[0].seek() < 29.783) {
+        } else if (audio.audio[0].seek() > 26.526 && audio.audio[0].seek() < 29.983) {
             setLine(10)
-        } else if (audio.audio[0].seek() > 29.784 && audio.audio[0].seek() < 32.075) {
+        } else if (audio.audio[0].seek() > 29.984 && audio.audio[0].seek() < 32.275) {
             setLine(11)
-        } else if (audio.audio[0].seek() > 32.076 && audio.audio[0].seek() < 35.775) {
+        } else if (audio.audio[0].seek() > 32.276 && audio.audio[0].seek() < 35.975) {
             setLine(12)
-        } else if (audio.audio[0].seek() > 35.776 && audio.audio[0].seek() < 39.610) {
+        } else if (audio.audio[0].seek() > 35.976 && audio.audio[0].seek() < 39.810) {
             setLine(13)
-        } else if (audio.audio[0].seek() > 39.611 && audio.audio[0].seek() < 43.248) {
+        } else if (audio.audio[0].seek() > 39.811 && audio.audio[0].seek() < 43.448) {
             setLine(14)
         } else {
             setLine(15)
@@ -63,7 +63,7 @@ export default function Caption(audio) {
 
     })
     return(<>
-    <Html center position={[ 0, 0.895, -1]} className="text-center text-red-500 w-[300px] md:w-[600px]">
+    <Html center position={[ 0, 0.895, -1]} className="text-center text-red-500 w-screen md:w-[600px]">
         <p>{ introLines[line] }</p>
     </Html>
     </>)
