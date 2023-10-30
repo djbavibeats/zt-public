@@ -22,7 +22,7 @@ export default function SoundsLikeTheRadioAddDay(props) {
         <mesh
             castShadow={ false }
             receiveShadow={ false }
-            geometry={nodes.Text011.geometry}
+            geometry={nodes.Text013.geometry}
             material={materials.TextMaterial}
             position={[0, 0, 0.25]}
             rotation={[Math.PI / 2, 0, 0]}

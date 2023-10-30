@@ -3,7 +3,7 @@ import { useGLTF } from "@react-three/drei";
 import { gsap } from 'gsap/gsap-core'
 
 export default function BackToYou(props) {
-  const { nodes, materials } = useGLTF("./buttons/right/backToYou.glb");
+  const { nodes, materials } = useGLTF("./buttons/right/kindOfWomanILike.glb");
   const button = useRef()
   const trim = useRef()
   const text = useRef()
@@ -22,7 +22,7 @@ export default function BackToYou(props) {
     <mesh
         castShadow={ false }
         receiveShadow={ false }
-        geometry={nodes.Text006.geometry}
+        geometry={nodes.Text011.geometry}
         material={materials.TextMaterial}
         position={[0, 0, 0.25]}
         rotation={[Math.PI / 2, 0, 0]}
@@ -33,7 +33,7 @@ export default function BackToYou(props) {
       <mesh
         castShadow={ false }
         receiveShadow={ false }
-        geometry={nodes.Cube012.geometry}
+        geometry={nodes.Cube003.geometry}
         material={materials.ButtonMaterial}
         ref={ button }
         >
@@ -42,7 +42,7 @@ export default function BackToYou(props) {
       <mesh
         castShadow={ false }
         receiveShadow={ false }
-        geometry={nodes.Cube012_1.geometry}
+        geometry={nodes.Cube003_1.geometry}
         material={materials.RedTrimMaterial}
         ref={ trim }
         >
@@ -52,4 +52,4 @@ export default function BackToYou(props) {
   );
 }
 
-useGLTF.preload("./buttons/right/backToYou.glb");
+useGLTF.preload("./buttons/right/kindOfWomanILike.glb");

@@ -17,7 +17,7 @@ import SoundsLikeTheRadioAddDay from './buttons/left/SoundsLikeTheRadioAddDay.js
 import ShowDates from './buttons/left/ShowDates.jsx'
 
 import TheresTheSun from './buttons/right/TheresTheSun.jsx'
-import BackToYou from './buttons/right/BackToYou.jsx'
+import KindOfWomanILike from './buttons/right/KindOfWomanILike.jsx'
 import BadLuck from './buttons/right/BadLuck.jsx'
 import ColdBeerAndCountryMusic from './buttons/right/ColdBeerAndCountryMusic.jsx'
 import JustaJonesin from './buttons/right/JustaJonesin.jsx'
@@ -70,12 +70,12 @@ export default function Jukebox(props) {
   const [ activeAudio, setActiveAudio ] = useState(0)
 
   const audioArray = useRef([
-    new Howl({ src: './audio/spoken/intro.mp3', html5: true, preload: true, onplay: (e) => { console.log(e) }, onend: () => handleSongEnd(0) }),
+    new Howl({ src: './audio/spoken/intro.mp3', html5: true, preload: true, onplay: () => { setIntroPlaying(true) }, onend: () => handleSongEnd(0) }),
     new Howl({ src:  './audio/songs/sounds-like-the-radio.mp3', html5: true, preload: true, onend: () => handleSongEnd(1) }),
     new Howl({ src:  './audio/songs/theres-the-sun.mp3', html5: true, preload: true, onend: () => handleSongEnd(2) }),
     new Howl({ src:  './audio/songs/cold-beer-and-country-music.mp3', html5: true, preload: true, onend: () => handleSongEnd(3) }),
     new Howl({ src:  './audio/songs/bad-luck.mp3', html5: true, preload: true, onend: () => handleSongEnd(4) }),
-    new Howl({ src: './audio/songs/back-to-you.mp3', html5: true, preload: true, onend: () => handleSongEnd(5) }),
+    new Howl({ src: './audio/songs/kind-of-woman-i-like.mp3', html5: true, preload: true, onend: () => handleSongEnd(5) }),
     new Howl({ src: './audio/songs/justa-jonesin.mp3', html5: true, preload: true, onend: () => handleSongEnd(6)})
   ])
 
@@ -496,7 +496,7 @@ export default function Jukebox(props) {
   }, [ props.reset ])
 
   return (<>
-    <Caption audio={ audioArray.current } />
+    <Caption audio={ audioArray.current } activePanel={ activePanel } />
     <group {...props} dispose={null} scale={ props.scale } position={ props.position }>
       <JukeboxBase 
         isActive={ jukeboxActive }
@@ -541,8 +541,8 @@ export default function Jukebox(props) {
     <ColdBeerAndCountryMusic position={[ 4.643, 26.825, 24.18 ]} rotation={[ -0.4, 0, 0 ]} isActive={ songButton9Active } />
     {/* Bad Luck */}
     <BadLuck position={[ 4.643, 25.204, 24.18 ]} rotation={[ -0.4, 0, 0 ]} isActive={ songButton10Active } />
-    {/* Back To You */}
-    <BackToYou position={[ 4.643, 23.557, 24.18 ]} rotation={[ -0.4, 0, 0 ]} isActive={ songButton11Active } />
+    {/* Kind Of Woman I Like */}
+    <KindOfWomanILike position={[ 4.643, 23.557, 24.18 ]} rotation={[ -0.4, 0, 0 ]} isActive={ songButton11Active } />
     {/* Justa Jonesin' */}
     <JustaJonesin position={[ 4.643, 21.962, 24.18 ]} rotation={[ -0.4, 0, 0 ]} isActive={ songButton12Active } />
 
