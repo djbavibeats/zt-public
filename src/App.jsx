@@ -1,7 +1,7 @@
 import './App.css'
 import { Canvas } from '@react-three/fiber'
 import { Fog } from 'three'
-import { Suspense, useState } from 'react'
+import { Suspense, useState, useEffect } from 'react'
 import { useProgress, Html } from '@react-three/drei'
 import { EffectComposer, Bloom } from '@react-three/postprocessing'
 
@@ -19,6 +19,7 @@ function Loader() {
 
 function App() {
   const [ showInstructions, setShowInstructions ] = useState(true)
+  const [ zoomedIn, setZoomedIn ] = useState(true)
   const [ reset, doReset ] = useState(0)
   
 
@@ -30,6 +31,14 @@ function App() {
     doReset(prev => prev + 1)
     setShowInstructions(true)
   }
+
+  function toggleZoomedIn() {
+    setZoomedIn(!zoomedIn)
+  }
+
+  useEffect(() => {
+    console.log('something happened with the zoom')
+  }, [ zoomedIn ])
   return (
     <>
       <Header />
@@ -48,8 +57,21 @@ function App() {
       }
       <></>
       { !showInstructions &&
+          zoomedIn &&
         <div>
-          <button  className="absolute bottom-2 left-2 z-50 bg-black text-white p-4" onClick={() => handleBackButton() }>BACK</button>
+          <button className="absolute bottom-2 left-2 z-50 bg-black text-white p-4" onClick={() => handleBackButton() }>BACK</button>
+        </div>
+      }
+      { !showInstructions &&
+          !zoomedIn &&
+        <div className="absolute bottom-[4.35rem] left-0 right-0 w-full flex justify-center z-50">
+          <p className="bg-black text-white text-center px-2 py-4">HIT THE GREEN BUTTON TO LISTEN</p>
+        </div>
+      }
+      { !showInstructions &&
+          zoomedIn &&
+        <div className="absolute bottom-[4.35rem] left-0 right-0 w-full flex justify-center z-50">
+          <p className="bg-black text-white text-center px-2 py-4">CLICK THE TITLES OR BUTTONS TO LISTEN</p>
         </div>
       }
       <Canvas
@@ -78,6 +100,7 @@ function App() {
       </EffectComposer>
         <Experience 
           reset={ reset }
+          toggleZoomedIn={ toggleZoomedIn }
         />
         </Suspense>
       </Canvas>

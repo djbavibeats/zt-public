@@ -81,6 +81,7 @@ export default function Experience(props) {
             position={[ 0, .5749 - .30, 0 ]}
             scale={[ 0.02, 0.02, 0.02 ]}
             reset={ props.reset }
+            toggleZoomedIn={ props.toggleZoomedIn }
         />
         <Backdrop position={[ 0, -1 - 0.30, -15 ]} scale={[ 50, 10, 10 ]}>
             <meshStandardMaterial color="#3e3131" />
