@@ -59,7 +59,7 @@ function App() {
       { !showInstructions &&
           zoomedIn &&
         <div>
-          <button className="absolute bottom-2 left-1 md:left-2 z-50 bg-black text-white text-sm md:text-md p-4" onClick={() => handleBackButton() }>BACK</button>
+          <button className="absolute bottom-2 left-2 md:left-2 z-50 bg-black text-white text-xs md:text-md p-4" onClick={() => handleBackButton() }>BACK</button>
         </div>
       }
       { !showInstructions &&
@@ -70,8 +70,8 @@ function App() {
       }
       { !showInstructions &&
           zoomedIn &&
-        <div className="absolute bottom-2 right-1 md:left-0 md:right-0 w-3/4 md:w-full flex justify-center z-50">
-          <p className="bg-black text-white text-center text-sm md:text-md px-1 md:px-2 py-4">CLICK THE TITLES OR BUTTONS TO LISTEN</p>
+        <div className="absolute bottom-2 md:bottom-[4.35rem] right-2 md:left-0 md:right-0 w-3/4 md:w-full flex justify-center z-50">
+          <p className="bg-black text-white text-center text-xs md:text-md px-1 md:px-2 py-4">CLICK THE TITLES OR BUTTONS TO LISTEN</p>
         </div>
       }
       <Canvas
