@@ -70,8 +70,8 @@ function App() {
       }
       { !showInstructions &&
           zoomedIn &&
-        <div className="absolute bottom-2 right-2 w-3/4 flex justify-center z-50">
-          <p className="bg-black text-white text-center text-sm md:text-md px-2 py-4">CLICK THE TITLES OR BUTTONS TO LISTEN</p>
+        <div className="absolute bottom-2 right-2 md:left-0 md:right-0 w-3/4 md:w-full flex justify-center z-50">
+          <p className="bg-black text-white text-center text-sm md:text-md px-1 md:px-2 py-4">CLICK THE TITLES OR BUTTONS TO LISTEN</p>
         </div>
       }
       <Canvas
