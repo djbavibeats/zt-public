@@ -70,7 +70,7 @@ function App() {
       }
       { !showInstructions &&
           zoomedIn &&
-        <div className="absolute bottom-[4.35rem] left-0 right-0 w-full flex justify-center z-50">
+        <div className="absolute bottom-2 right-2 w-3/4 flex justify-center z-50">
           <p className="bg-black text-white text-center px-2 py-4">CLICK THE TITLES OR BUTTONS TO LISTEN</p>
         </div>
       }
