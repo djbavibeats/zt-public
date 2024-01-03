@@ -45,7 +45,7 @@ function App() {
       { showInstructions &&
         <div className="absolute z-40 text-center p-8 h-screen w-full bg-[rgba(0,0,0,0.75)] flex-col text-white flex justify-center items-center">
           <div className="max-w-[500px]">
-            <p className="text-2xl font-bold mb-4">Welcome to Zach Top Radio!</p>
+            <p className="text-2xl font-bold mb-4">Welcome to Zach Top Radio!!</p>
             <p className="mb-4">Turn on the Jukebox by pressing the big green button and tune into some of your
               (soon to be) favorite Zach Top hits!
             </p>
@@ -90,14 +90,14 @@ function App() {
         }}
       >   
       <Suspense fallback={<Loader />}>
-      <EffectComposer multisampling={ 4 }>
+      {/* <EffectComposer multisampling={ 4 }>
         <Bloom 
           mipmapBlur
           luminanceThreshold={ 0.25 }
           // luminanceSmoothing={ 0.75 }
           intensity={ 0.5 }
           />
-      </EffectComposer>
+      </EffectComposer> */}
         <Experience 
           reset={ reset }
           toggleZoomedIn={ toggleZoomedIn }

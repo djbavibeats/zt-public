@@ -1,8 +1,14 @@
 import { Html } from "@react-three/drei"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { useFrame } from "@react-three/fiber"
+import { gsap } from "gsap/gsap-core"
+
+import { useGSAP } from "@gsap/react";
+
 export default function Caption({ audio, activePanel }) {
     let [ line, setLine ] = useState(0)
+    let container = useRef()
+    let caption = useRef()
     let introLines = [
         "With a deep-rooted love for traditional music,",
         "Zach Top is poised to invigorate the country genre",
@@ -23,11 +29,20 @@ export default function Caption({ audio, activePanel }) {
     ]
     useEffect(() => {
         // console.log(audio.audio[0].seek())
-        console.log(activePanel)
+        console.log("caption element", caption.current)
+        console.log("gsap", gsap)
     }, [ activePanel ])
 
+    useGSAP(() => {
+        gsap.set(container.current, { autoAlpha: 0 });
+    })
+
     useFrame(() => {
-        if (audio[0].seek() > 0.000 && audio[0].seek() < 2.075) {
+        if (audio[0].seek() == 0.000) {
+            // console.log(caption.current.style)
+            gsap.to(container.current, { autoAlpha: 0 })
+        } else if (audio[0].seek() > 0.000 && audio[0].seek() < 2.075) {
+            gsap.to(container.current, { autoAlpha: 1 })
             setLine(0)
         } else if (audio[0].seek() > 2.076 && audio[0].seek() < 4.860) {
             setLine(1)
@@ -63,8 +78,10 @@ export default function Caption({ audio, activePanel }) {
 
     })
     return(<>
-    <Html center position={[ 0, 0.94, 0 ]} className="text-center text-red-500 w-[325px] md:w-[600px]">
+    <Html ref={ container } center position={[ 0, 0.94, 0 ]} className="opacity-0 text-center text-red-500 w-[325px] md:w-[600px]">
+        <div ref={ caption } className="box">
         <p>{ introLines[line] }</p>
+        </div>
     </Html>
     </>)
 }
