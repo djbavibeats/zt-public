@@ -2,45 +2,45 @@ import { useEffect, useRef, useState } from 'react'
 export default function SpotifyPlayer(props) {
     const spotifyIFrame = useRef()
     const [ object, setObject ] = useState(null)
-    // useEffect(() => {
-    //     if (props.spotifyInitialized) {
-    //         const script = document.createElement('script')
-    //         script.src = "https://open.spotify.com/embed/iframe-api/v1"
-    //         script.async = true
-    //         document.body.appendChild(script)
-    //         window.onSpotifyIframeApiReady = (IFrameAPI) => {
-    //             const element = document.getElementById('embed-iframe')
-    //             const options = {
-    //                 width: '100%',
-    //                 height: '160',
-    //                 uri: `spotify:track:5wCUOa3jSe5ZM3oXEutCdO`,
-    //                 theme: 'dark'
-    //                 }
-    //             const callback = (EmbedController) => {
-    //                 setObject(EmbedController)
-    //                 EmbedController.addListener('ready', () => {
-    //                     console.log('player ready')
+    useEffect(() => {
+        if (props.spotifyInitialized) {
+            const script = document.createElement('script')
+            script.src = "https://open.spotify.com/embed/iframe-api/v1"
+            script.async = true
+            document.body.appendChild(script)
+            window.onSpotifyIframeApiReady = (IFrameAPI) => {
+                const element = document.getElementById('embed-iframe')
+                const options = {
+                    width: '100%',
+                    height: '160',
+                    uri: `spotify:track:5wCUOa3jSe5ZM3oXEutCdO`,
+                    theme: 'dark'
+                    }
+                const callback = (EmbedController) => {
+                    setObject(EmbedController)
+                    EmbedController.addListener('ready', () => {
+                        console.log('player ready')
                         
-    //                 console.log(document.querySelectorAll('[aria-label="Play"'))
-    //                     EmbedController.togglePlay()
-    //                 })
-    //             }
-    //             IFrameAPI.createController(element, options, callback)
-    //         }
+                    console.log(document.querySelectorAll('[aria-label="Play"'))
+                        EmbedController.togglePlay()
+                    })
+                }
+                IFrameAPI.createController(element, options, callback)
+            }
     
-    //         return () => {
-    //             document.body.removeChild(script)
-    //         }
-    //     }
+            return () => {
+                document.body.removeChild(script)
+            }
+        }
 
-    // }, [ props.spotifyInitialized ])
+    }, [ props.spotifyInitialized ])
 
     useEffect(() => {
-        spotifyIFrame.current.src = `https://open.spotify.com/embed/track/${props.currentSpotifyId}?generator&theme=0`
-        console.log(spotifyIFrame.current.contentDocument)
+        // spotifyIFrame.current.src = `https://open.spotify.com/embed/track/${props.currentSpotifyId}?generator&theme=0`
+        // console.log(spotifyIFrame.current.contentDocument)
         if (object) {
             // console.log("Object", object)
-            // object.loadUri(`spotify:track:${props.currentSpotifyId}`)
+            object.loadUri(`spotify:track:${props.currentSpotifyId}`)
             // object.onPlayerReady(() => {
             //     console.log('player ready')
             // })
@@ -55,7 +55,7 @@ export default function SpotifyPlayer(props) {
     return (<>
         <div className="spotify-wrapper absolute bottom-0 left-0 right-0 min-h-[160px] w-full">
         <div id="embed-iframe"></div>
-        <iframe 
+        {/* <iframe 
             ref={ spotifyIFrame}
             // style="border-radius:12px" 
             src="https://open.spotify.com/embed/track/5wCUOa3jSe5ZM3oXEutCdO?utm_source=generator" 
@@ -67,7 +67,7 @@ export default function SpotifyPlayer(props) {
             loading="lazy"
         >
 
-        </iframe>
+        </iframe> */}
         </div>
     </>)
 }
