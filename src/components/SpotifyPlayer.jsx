@@ -6,7 +6,8 @@ export default function SpotifyPlayer(props) {
 
     const client_id = 'd3ea7e5cb8f646deba93241502769362'
     const scopes = 'streaming user-read-email user-read-private user-modify-playback-state'
-    const redirect_uri = 'http://localhost:5173/'
+    // const redirect_uri = 'http://localhost:5173/'
+    const redirect_uri = 'https://gorgeous-marzipan-30f904.netlify.app/'
   
     function spotifyLogin() {
         let popup = window.open(
