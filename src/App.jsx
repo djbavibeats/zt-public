@@ -7,6 +7,7 @@ import { EffectComposer, Bloom } from '@react-three/postprocessing'
 
 import Header from './components/Header'
 import Experience from './components/Experience'
+import SpotifyPlayer from './components/SpotifyPlayer'
 
 function Loader() {
   const { progress } = useProgress()
@@ -19,12 +20,15 @@ function Loader() {
 
 function App() {
   const [ showInstructions, setShowInstructions ] = useState(true)
+  const [ currentSpotifyId, setCurrentSpotifyId ] = useState('5wCUOa3jSe5ZM3oXEutCdO')
+  const [ spotifyInitialized, setSpotifyInitialized ] = useState(false)
   const [ zoomedIn, setZoomedIn ] = useState(true)
   const [ reset, doReset ] = useState(0)
   
 
   function beginExperience() {
     setShowInstructions(false)
+    setSpotifyInitialized(true)
   }
 
   function handleBackButton() {
@@ -34,6 +38,37 @@ function App() {
 
   function toggleZoomedIn() {
     setZoomedIn(!zoomedIn)
+  }
+
+  function initializeSpotifyPlayer() {
+
+  }
+
+  function toggleSpotifySong(pos) {
+    console.log('toggle!', pos)
+    switch (pos) {
+      case(1):
+        setCurrentSpotifyId('5wCUOa3jSe5ZM3oXEutCdO')
+        break
+      case(2):
+        setCurrentSpotifyId('6OWM81gZLDz9D7s6RmVLSJ')
+        break
+      case(3):
+        setCurrentSpotifyId('6r8oKdUQPyW3z3I0ooWlCt')
+        break
+      case(4):
+        setCurrentSpotifyId('6Y3BNXD4TwhldgAbWqDnif')
+        break
+      case(5):
+        setCurrentSpotifyId('7HxLpCpwGAZmH4b5uAf7KU')
+        break
+      case(6):
+        setCurrentSpotifyId('4DQbYa6yBye49Yg1ui0hfO')
+        break
+      default:
+        setCurrentSpotifyId('5wCUOa3jSe5ZM3oXEutCdO')
+        break
+    }
   }
 
   useEffect(() => {
@@ -64,13 +99,13 @@ function App() {
       }
       { !showInstructions &&
           !zoomedIn &&
-        <div className="absolute bottom-[4.35rem] left-0 right-0 w-full flex justify-center z-50">
+        <div className="absolute bottom-[12.5rem] left-0 right-0 w-full flex justify-center z-50">
           <p className="bg-black text-white text-center px-2 py-4">HIT THE GREEN BUTTON TO LISTEN</p>
         </div>
       }
       { !showInstructions &&
           zoomedIn &&
-        <div className="absolute bottom-2 md:bottom-[4.35rem] right-2 md:left-0 md:right-0 w-3/4 md:w-full flex justify-center z-50">
+        <div className="absolute bottom-2 md:bottom-[10.25rem] right-2 md:left-0 md:right-0 w-3/4 md:w-full flex justify-center z-50">
           <p className="bg-black text-white text-center text-xs md:text-md px-2 py-4">CLICK THE TITLES OR BUTTONS TO LISTEN</p>
         </div>
       }
@@ -101,9 +136,15 @@ function App() {
         <Experience 
           reset={ reset }
           toggleZoomedIn={ toggleZoomedIn }
+          toggleSpotifySong={ toggleSpotifySong }
         />
         </Suspense>
       </Canvas>
+      <SpotifyPlayer 
+        currentSpotifyId={ currentSpotifyId }
+        toggleSpotifySong={ toggleSpotifySong }
+        spotifyInitialized={ spotifyInitialized }
+      />
     </>
   )
 }

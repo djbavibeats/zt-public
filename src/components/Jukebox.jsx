@@ -142,18 +142,43 @@ export default function Jukebox(props) {
   function playNewSong(pos) {
     console.log("Playing Song: " + pos)
     audioArray.current[activeAudio].unload()
-  
-    audioArray.current.map((song, index) => {
-      if (index === pos) {
-        // song.seek(218)
-        song.play()
+    switch (pos) {
+      case 1:
+      case 2:
+      case 3:
+      case 4:
+      case 5:
+      case 6:
+        props.toggleSpotifySong(pos)
         setActiveAudio(pos)
         setAudioPaused(false)
-      } else {
-        song.stop()
-      }
+        break
+      case(0):
+        console.log('play intro')
+        audioArray.current.map((song, index) => { 
+          if (index === 0) {
+            audioArray.current[activeAudio].unload()
+            song.play()
+            setActiveAudio(pos)
+            setAudioPaused(false)
+          }
+        })
+
+        break
+    }
+    // audioArray.current[activeAudio].unload()
+  
+    // audioArray.current.map((song, index) => {
+    //   if (index === pos) {
+    //     // song.seek(218)
+    //     song.play()
+    //     setActiveAudio(pos)
+    //     setAudioPaused(false)
+    //   } else {
+    //     song.stop()
+    //   }
       
-    })
+    // })
   }
 
   var playingAllSongs = true
