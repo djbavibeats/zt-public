@@ -267,6 +267,7 @@ export default function Jukebox(props) {
   function pause(pos) {
     console.log(activeAudio)
     console.log(audioPaused)
+    props.togglePause()
     audioArray.current.map((song, index) => {
       if (index === activeAudio) {
         console.log('this is the song!')

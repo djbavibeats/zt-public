@@ -24,6 +24,7 @@ function App() {
   const [ spotifyInitialized, setSpotifyInitialized ] = useState(false)
   const [ zoomedIn, setZoomedIn ] = useState(true)
   const [ reset, doReset ] = useState(0)
+  const [ pause, setPause ] = useState(false)
   
 
   function beginExperience() {
@@ -38,6 +39,10 @@ function App() {
 
   function toggleZoomedIn() {
     setZoomedIn(!zoomedIn)
+  }
+
+  function togglePause() {
+    setPause(!pause)
   }
 
   function initializeSpotifyPlayer() {
@@ -137,6 +142,7 @@ function App() {
           reset={ reset }
           toggleZoomedIn={ toggleZoomedIn }
           toggleSpotifySong={ toggleSpotifySong }
+          togglePause={ togglePause }
         />
         </Suspense>
       </Canvas>
@@ -144,6 +150,7 @@ function App() {
         currentSpotifyId={ currentSpotifyId }
         toggleSpotifySong={ toggleSpotifySong }
         spotifyInitialized={ spotifyInitialized }
+        pause={ pause }
       />
     </>
   )

@@ -1,74 +1,132 @@
 import { useEffect, useRef, useState } from 'react'
 export default function SpotifyPlayer(props) {
-    const spotifyIFrame = useRef()
-    const [ object, setObject ] = useState(null)
-    useEffect(() => {
-        if (props.spotifyInitialized) {
-            const script = document.createElement('script')
-            script.src = "https://open.spotify.com/embed/iframe-api/v1"
-            script.async = true
-            document.body.appendChild(script)
-            window.onSpotifyIframeApiReady = (IFrameAPI) => {
-                const element = document.getElementById('embed-iframe')
-                const options = {
-                    width: '100%',
-                    height: '160',
-                    uri: `spotify:track:5wCUOa3jSe5ZM3oXEutCdO`,
-                    theme: 'dark'
-                    }
-                const callback = (EmbedController) => {
-                    setObject(EmbedController)
-                    EmbedController.addListener('ready', () => {
-                        console.log('player ready')
-                        
-                    console.log(document.querySelectorAll('[aria-label="Play"'))
-                        EmbedController.togglePlay()
-                    })
-                }
-                IFrameAPI.createController(element, options, callback)
-            }
-    
-            return () => {
-                document.body.removeChild(script)
-            }
-        }
+    const [ spotifyToken, setSpotifyToken ] = useState('')
+    const [ player, setPlayer ] = useState(undefined)
+    const [ deviceId, setDeviceId ] = useState('')
 
+    const client_id = 'd3ea7e5cb8f646deba93241502769362'
+    const scopes = 'streaming user-read-email user-read-private user-modify-playback-state'
+    const redirect_uri = 'http://localhost:5173/'
+  
+    function spotifyLogin() {
+        let popup = window.open(
+            `https://accounts.spotify.com/authorize?client_id=${client_id}&response_type=token&redirect_uri=${redirect_uri}&scope=${scopes}&show_dialog=true`, 
+            'Login with Spotify', 
+            'width=800,height=600'
+        )
+
+        window.spotifyCallback = (payload) => {
+            popup.close()
+            initializeSpotifyPlayer(payload)
+        }
+    }
+
+    useEffect(() => {
+        let windowToken = window.location.hash.substr(1).split('&')[0].split('=')[1]
+        if (windowToken) {
+            setSpotifyToken(window.location.hash.substr(1).split('&')[0].split('=')[1])
+            window.opener.spotifyCallback(spotifyToken)
+        }
+    }, [ spotifyToken ])
+
+    useEffect(() => {
+        if (props.pause === true && player) {
+            console.log('paused')
+            console.log(player)
+            fetch(`https://api.spotify.com/v1/me/player/pause?device_id=${deviceId}`, {
+                headers: {
+                    'Authorization': `Bearer ${spotifyToken}`
+                },
+                method: "PUT"
+            })
+        }
+    }, [ props.pause ])
+
+    function initializeSpotifyPlayer(token) {
+        setSpotifyToken(token)
+        const script = document.createElement("script")
+        script.src = "https://sdk.scdn.co/spotify-player.js"
+        script.async = true
+
+        document.body.appendChild(script)
+
+        window.onSpotifyWebPlaybackSDKReady = () => {
+            const player = new Spotify.Player({
+                name: 'Zach Top Radio',
+                getOAuthToken: cb => { 
+                    cb(token) 
+                },
+                volume: 0.5
+            })
+
+            setPlayer(player)
+
+            player.addListener('initialization_error', ({ message }) => {
+                console.error(message)
+            })
+          
+            player.addListener('authentication_error', ({ message }) => {
+                console.error(message)
+            })
+          
+            player.addListener('account_error', ({ message }) => {
+                console.error(message)
+            })
+
+            player.addListener('ready', ({ device_id }) => {
+                console.log('Ready with Device ID', device_id)
+                setDeviceId(device_id)
+                fetch('https://api.spotify.com/v1/me/player', {
+                    headers: {
+                      'Authorization': `Bearer ${token}`
+                    },
+                    method: "PUT",
+                    body: JSON.stringify({
+                        "device_ids": [ device_id ]
+                    })
+                  }).then(response => {
+                    console.log('Ready to go.')
+                  })
+            })
+    
+            player.addListener('not_ready', ({ device_id }) => {
+                console.log('Device ID has gone offline', device_id)
+            })
+
+            player.connect().then(success => {
+                if (success) {
+                    console.log('Zach Top radio is connected to Spotify!')
+                } else {
+                    console.log('something went wrong')
+                }
+            })
+    
+        }
+    }
+
+    useEffect(() => {
+        if (props.spotifyInitialized === true) {
+            spotifyLogin()
+        }
     }, [ props.spotifyInitialized ])
 
     useEffect(() => {
-        // spotifyIFrame.current.src = `https://open.spotify.com/embed/track/${props.currentSpotifyId}?generator&theme=0`
-        // console.log(spotifyIFrame.current.contentDocument)
-        if (object) {
-            // console.log("Object", object)
-            object.loadUri(`spotify:track:${props.currentSpotifyId}`)
-            // object.onPlayerReady(() => {
-            //     console.log('player ready')
-            // })
-            // setTimeout(() => {
-            // }, 500)
+        let trackString = "spotify:track:" + props.currentSpotifyId
+        console.log(trackString)
+        if (spotifyToken) {
+            fetch(`https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`, {
+                headers: {
+                    'Authorization': `Bearer ${spotifyToken}`
+                },
+                method: "PUT",
+                body: JSON.stringify({
+                    "uris": [ trackString ]
+                })
+            })
         }
-    }, [ props ])
+    }, [ props.currentSpotifyId ])
 
-    function updateSpotifyLink() {
-        console.log('link')
-    }
     return (<>
-        <div className="spotify-wrapper absolute bottom-0 left-0 right-0 min-h-[160px] w-full">
-        <div id="embed-iframe"></div>
-        {/* <iframe 
-            ref={ spotifyIFrame}
-            // style="border-radius:12px" 
-            src="https://open.spotify.com/embed/track/5wCUOa3jSe5ZM3oXEutCdO?utm_source=generator" 
-            width="100%" 
-            height="152" 
-            frameBorder="0" 
-            allowfullscreen="" 
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-            loading="lazy"
-        >
-
-        </iframe> */}
-        </div>
     </>)
 }
 
