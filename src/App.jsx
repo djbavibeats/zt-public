@@ -42,6 +42,7 @@ function App() {
   }
 
   function togglePause() {
+    console.log('pause')
     setPause(!pause)
   }
 
@@ -53,25 +54,25 @@ function App() {
     console.log('toggle!', pos)
     switch (pos) {
       case(1):
-        setCurrentSpotifyId('5wCUOa3jSe5ZM3oXEutCdO')
+        setCurrentSpotifyId('https://soundcloud.com/zachtop/sounds-like-the-radio-1')
         break
       case(2):
-        setCurrentSpotifyId('6OWM81gZLDz9D7s6RmVLSJ')
+        setCurrentSpotifyId('https://soundcloud.com/zachtop/theres-the-sun')
         break
       case(3):
-        setCurrentSpotifyId('6r8oKdUQPyW3z3I0ooWlCt')
+        setCurrentSpotifyId('https://soundcloud.com/zachtop/cold-beer-country-music-1')
         break
       case(4):
-        setCurrentSpotifyId('6Y3BNXD4TwhldgAbWqDnif')
+        setCurrentSpotifyId('https://soundcloud.com/zachtop/bad-luck')
         break
       case(5):
-        setCurrentSpotifyId('7HxLpCpwGAZmH4b5uAf7KU')
+        setCurrentSpotifyId('https://soundcloud.com/zachtop/the-kinda-woman-i-like')
         break
       case(6):
-        setCurrentSpotifyId('4DQbYa6yBye49Yg1ui0hfO')
+        setCurrentSpotifyId('https://soundcloud.com/zachtop/justa-jonesin')
         break
       default:
-        setCurrentSpotifyId('5wCUOa3jSe5ZM3oXEutCdO')
+        setCurrentSpotifyId('https://soundcloud.com/zachtop/sounds-like-the-radio-1')
         break
     }
   }
@@ -99,7 +100,7 @@ function App() {
       { !showInstructions &&
           zoomedIn &&
         <div>
-          <button className="absolute bottom-2 left-2 md:left-2 z-50 bg-black text-white text-xs md:text-md p-4" onClick={() => handleBackButton() }>BACK</button>
+          <button className="absolute bottom-[10.25rem] left-2 md:left-2 z-50 bg-black text-white text-xs md:text-md p-4" onClick={() => handleBackButton() }>BACK</button>
         </div>
       }
       { !showInstructions &&
@@ -110,7 +111,7 @@ function App() {
       }
       { !showInstructions &&
           zoomedIn &&
-        <div className="absolute bottom-2 md:bottom-[10.25rem] right-2 md:left-0 md:right-0 w-3/4 md:w-full flex justify-center z-50">
+        <div className="absolute bottom-2 md:bottom-[10.25rem] right-2 md:left-0 md:right-0 w-3/4 md:w-full flex justify-center z-10">
           <p className="bg-black text-white text-center text-xs md:text-md px-2 py-4">CLICK THE TITLES OR BUTTONS TO LISTEN</p>
         </div>
       }

@@ -3,7 +3,7 @@ import { useGLTF } from "@react-three/drei";
 import { gsap } from 'gsap/gsap-core'
 
 export default function SoundsLikeTheRadioAddDay(props) {
-  const { nodes, materials } = useGLTF("./buttons/left/soundsLikeTheRadioAddDay.glb");
+  const { nodes, materials } = useGLTF("./buttons/left/soundsLikeTheRadioVideo.glb");
   const button = useRef()
   const trim = useRef()
   const text = useRef()
@@ -22,9 +22,9 @@ export default function SoundsLikeTheRadioAddDay(props) {
         <mesh
             castShadow={ false }
             receiveShadow={ false }
-            geometry={nodes.Text013.geometry}
+            geometry={nodes.Text012.geometry}
             material={materials.TextMaterial}
-            position={[0, 0, 0.25]}
+            position={[2.5, 0, 0.25]}
             rotation={[Math.PI / 2, 0, 0]}
             scale={0.788}
             ref={ text }
@@ -53,4 +53,4 @@ export default function SoundsLikeTheRadioAddDay(props) {
   );
 }
 
-useGLTF.preload("./buttons/left/soundsLikeTheRadioAddDay.glb");
+useGLTF.preload("./buttons/left/soundsLikeTheVideo.glb");

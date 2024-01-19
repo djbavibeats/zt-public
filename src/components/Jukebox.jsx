@@ -289,7 +289,7 @@ export default function Jukebox(props) {
   }
 
   function soundsLikeTheRadioAddDay() {
-    window.open("http://addboard.mediabase.com/menu.asp", "_blank" )
+    window.open("https://www.youtube.com/watch?v=cOKHBwNPQKo", "_blank" )
   }
 
   function handleSongButtonClick(num, isfirst) {
@@ -305,6 +305,7 @@ export default function Jukebox(props) {
           songButton6.current.material, songButton7.current.material, songButton8.current.material, songButton9.current.material,
           songButton10.current.material, songButton11.current.material, songButton12.current.material
         ], { emissiveIntensity: 0.0 })
+        props.togglePause()
         playNewSong(0)
         setSongButton1Active(true)
         setSongButton2Active(false)
@@ -349,9 +350,9 @@ export default function Jukebox(props) {
         pause()
         break
       case(4):
-        gsap.to(songButton4.current.material, { emissiveIntensity: 1.5 })
+        gsap.to(songButton2.current.material, { emissiveIntensity: 1.5 })
         gsap.to([
-          songButton1.current.material, songButton2.current.material, songButton3.current.material, songButton5.current.material,
+          songButton1.current.material, songButton4.current.material, songButton3.current.material, songButton5.current.material,
           songButton6.current.material, songButton7.current.material, songButton8.current.material, songButton9.current.material,
           songButton10.current.material, songButton11.current.material, songButton12.current.material
         ], { emissiveIntensity: 0.0 })
@@ -370,9 +371,9 @@ export default function Jukebox(props) {
         setSongButton12Active(false)
         break
       case(5):
-        gsap.to(songButton5.current.material, { emissiveIntensity: 1.5 })
+        gsap.to(songButton3.current.material, { emissiveIntensity: 1.5 })
         gsap.to([
-          songButton1.current.material, songButton2.current.material, songButton3.current.material, songButton4.current.material,
+          songButton1.current.material, songButton2.current.material, songButton5.current.material, songButton4.current.material,
           songButton6.current.material, songButton7.current.material, songButton8.current.material, songButton9.current.material,
           songButton10.current.material, songButton11.current.material, songButton12.current.material
         ], { emissiveIntensity: 0.0 })
@@ -588,10 +589,14 @@ export default function Jukebox(props) {
       <boxGeometry />
     </mesh>
     <MeetZach position={[ -5.286, 30.003, 24.18 ]} rotation={[ -0.4, 0, 0 ]} isActive={ songButton1Active } onClick={ () => handleSongButtonClick(1)} onPointerOver={() => setHovered(true) } onPointerOut={() => setHovered(false) } />
-    <PlayAll position={[ -5.286, 28.33, 24.18 ]} rotation={[ -0.4, 0, 0 ]} isActive={ songButton2Active } onClick={ () => handleSongButtonClick(2)} onPointerOver={() => setHovered(true) } onPointerOut={() => setHovered(false) } />
-    <Pause position={[ -5.286, 26.825, 24.18 ]} rotation={[ -0.4, 0, 0 ]} isActive={ songButton3Active } onClick={ () => handleSongButtonClick(3)} onPointerOver={() => setHovered(true) } onPointerOut={() => setHovered(false) } />
-    <SoundsLikeTheRadioAddDay position={[ -5.286, 25.204, 24.18 ]} rotation={[ -0.4, 0, 0 ]} isActive={ songButton4Active } onClick={ () => handleSongButtonClick(4)} onPointerOver={() => setHovered(true) } onPointerOut={() => setHovered(false) } />
-    <ShowDates position={[ -5.286, 23.557, 24.18 ]} rotation={[ -0.4, 0, 0 ]} isActive={ songButton5Active } onClick={ () => handleSongButtonClick(5)} onPointerOver={() => setHovered(true) } onPointerOut={() => setHovered(false) } />
+    <SoundsLikeTheRadioAddDay position={[ -5.286, 28.33, 24.18 ]} rotation={[ -0.4, 0, 0 ]} isActive={ songButton4Active } onClick={ () => handleSongButtonClick(4)} onPointerOver={() => setHovered(true) } onPointerOut={() => setHovered(false) } />
+    <ShowDates position={[ -5.286, 26.825, 24.18 ]} rotation={[ -0.4, 0, 0 ]} isActive={ songButton5Active } onClick={ () => handleSongButtonClick(5)} onPointerOver={() => setHovered(true) } onPointerOut={() => setHovered(false) } />
+    <EmptyButton position={[ -5.286, 25.204, 24.18 ]} rotation={[ -0.4, 0, 0 ]} />
+    <EmptyButton position={[ -5.286, 23.557, 24.18 ]} rotation={[ -0.4, 0, 0 ]} />
+    {/* <PlayAll position={[ -5.286, 28.33, 24.18 ]} rotation={[ -0.4, 0, 0 ]} isActive={ songButton2Active } onClick={ () => handleSongButtonClick(2)} onPointerOver={() => setHovered(true) } onPointerOut={() => setHovered(false) } /> */}
+
+    {/* <Pause position={[ -5.286, 21.962, 24.18 ]} rotation={[ -0.4, 0, 0 ]} isActive={ songButton3Active } onClick={ () => handleSongButtonClick(3)} onPointerOver={() => setHovered(true) } onPointerOut={() => setHovered(false) } /> */}
+    
     <EmptyButton position={[ -5.286, 21.962, 24.18 ]} rotation={[ -0.4, 0, 0 ]} onClick={ () => handleSongButtonClick(6)} onPointerOver={() => setHovered(true) } onPointerOut={() => setHovered(false) } />
    
     {/* Sounds Like The Radio */}
@@ -605,8 +610,7 @@ export default function Jukebox(props) {
     {/* Kind Of Woman I Like */}
     <KindOfWomanILike position={[ 4.643, 23.557, 24.18 ]} rotation={[ -0.4, 0, 0 ]} isActive={ songButton11Active } onClick={ () => handleSongButtonClick(11)} onPointerOver={() => setHovered(true) } onPointerOut={() => setHovered(false) } />
     {/* Justa Jonesin' */}
-    <JustaJonesin position={[ 4.643, 21.962, 24.18 ]} rotation={[ -0.4, 0, 0 ]} isActive={ songButton12Active } onClick={ () => handleSongButtonClick(12)} onPointerOver={() => setHovered(true) } onPointerOut={() => setHovered(false) } />
-
+    <EmptyButton position={[ 4.643, 21.962, 24.18 ]} rotation={[ -0.4, 0, 0 ]} />
     <mesh
       geometry={nodes.song_button.geometry}
       position={[-10.375, 29.976, 25.458]}
