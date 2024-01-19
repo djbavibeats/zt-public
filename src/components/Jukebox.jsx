@@ -127,10 +127,10 @@ export default function Jukebox(props) {
         state.camera.position.lerp(vec.set(0.0, 1.00, 1.1, 0.1), step)
       } else {
         if (activePanel === 'left') {
-            state.camera.position.lerp(vec.set(-0.11, 1.00, 1.1, 0.1), step)
+            state.camera.position.lerp(vec.set(-0.11, 0.9, 1.1, 0.1), step)
             state.camera.updateProjectionMatrix()
         } else if (activePanel === 'right') {
-            state.camera.position.lerp(vec.set(0.11, 1.00, 1.1, 0.1), step)
+            state.camera.position.lerp(vec.set(0.11, 0.9, 1.1, 0.1), step)
             state.camera.updateProjectionMatrix()
         }
       }

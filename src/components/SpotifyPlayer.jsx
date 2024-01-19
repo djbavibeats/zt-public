@@ -41,7 +41,6 @@ export default function SpotifyPlayer(props) {
             soundcloudPlayer.play()
             
         }
-        
     }, [ props.currentSpotifyId ])
 
     return (<>
@@ -59,9 +58,17 @@ export default function SpotifyPlayer(props) {
     scrolling="no" 
     frameborder="no" 
     allow="autoplay"
-    src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1696384518&"
+    src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1696384518"
     >
     </iframe>
+    {/* <iframe 
+    width="100%" 
+    height="300" 
+    scrolling="no" 
+    frameborder="no" 
+    allow="autoplay" 
+    src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1696384518&amp;hide_related=false&amp;show_comments=false&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=true&amp;visual=true"></iframe> */}
+
     </div>
     </>)
 }
