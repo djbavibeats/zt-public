@@ -54,7 +54,7 @@ export default function SpotifyPlayer(props) {
     <iframe 
     ref={ soundcloud }
     width="100%" 
-    height="75" 
+    height="125" 
     scrolling="no" 
     frameborder="no" 
     allow="autoplay"
