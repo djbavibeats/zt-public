@@ -105,13 +105,13 @@ function App() {
       }
       { !showInstructions &&
           !zoomedIn &&
-        <div className="absolute bottom-[12.5rem] left-0 right-0 w-full flex justify-center z-50">
+        <div className="absolute bottom-[12.5rem] left-0 right-0 w-full flex justify-center z-0">
           <p className="bg-black text-white text-center px-2 py-4">HIT THE GREEN BUTTON TO LISTEN</p>
         </div>
       }
       { !showInstructions &&
           zoomedIn &&
-        <div className="absolute bottom-2 md:bottom-[10.25rem] right-2 md:left-0 md:right-0 w-3/4 md:w-full flex justify-center z-10">
+        <div className="absolute bottom-2 md:bottom-[5.25rem] right-2 md:left-0 md:right-0 w-3/4 md:w-full flex justify-center z-10">
           <p className="bg-black text-white text-center text-xs md:text-md px-2 py-4">CLICK THE TITLES OR BUTTONS TO LISTEN</p>
         </div>
       }
@@ -147,12 +147,12 @@ function App() {
         />
         </Suspense>
       </Canvas>
-      <SpotifyPlayer 
+      {/* <SpotifyPlayer 
         currentSpotifyId={ currentSpotifyId }
         toggleSpotifySong={ toggleSpotifySong }
         spotifyInitialized={ spotifyInitialized }
         pause={ pause }
-      />
+      /> */}
     </>
   )
 }
