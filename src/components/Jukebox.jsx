@@ -6,21 +6,11 @@ import { Howl } from 'howler'
 import { gsap } from "gsap/gsap-core"
 
 import JukeboxBase from './Base.jsx'
-import Caption from './Caption.jsx'
-
-import EmptyButton from './buttons/EmptyButton.jsx'
-
-import MeetZach from './buttons/left/MeetZach.jsx'
-import PlayAll from './buttons/left/PlayAll.jsx'
-import Pause from './buttons/left/Pause.jsx'
-import SoundsLikeTheRadioAddDay from './buttons/left/SoundsLikeTheRadioAddDay.jsx'
-import ShowDates from './buttons/left/ShowDates.jsx'
 
 import TheresTheSun from './buttons/right/TheresTheSun.jsx'
 import KindOfWomanILike from './buttons/right/KindOfWomanILike.jsx'
 import BadLuck from './buttons/right/BadLuck.jsx'
 import ColdBeerAndCountryMusic from './buttons/right/ColdBeerAndCountryMusic.jsx'
-import JustaJonesin from './buttons/right/JustaJonesin.jsx'
 import SoundsLikeTheRadio from './buttons/right/SoundsLikeTheRadio.jsx'
 import CowBoysLikeMeDo from "./buttons/new/CowboysLikeMeDo.jsx"
 import DirtTurnsToGold from "./buttons/new/DirtTurnsToGold.jsx"
@@ -345,8 +335,6 @@ export default function Jukebox(props) {
   }
 
   function pause(pos) {
-    console.log(activeAudio)
-    console.log(audioPaused)
     props.togglePause()
     audioArray.current.map((song, index) => {
       if (index === activeAudio) {
@@ -377,7 +365,6 @@ export default function Jukebox(props) {
     if (!firstSongPlayed) {
       setFirstSongPlayed(true)
     }
-    console.log(num)
     switch (num) {
       case(1):
         gsap.to(songButton1.current.material, { emissiveIntensity: 1.5 })
@@ -533,7 +520,6 @@ export default function Jukebox(props) {
         setSongButton12Active(false)
         break
       case(8):
-      console.log('UMM')
         gsap.to(songButton8.current.material, { emissiveIntensity: 1.5 })
         gsap.to([
           songButton1.current.material, songButton2.current.material, songButton3.current.material, songButton4.current.material,

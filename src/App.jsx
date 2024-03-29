@@ -100,7 +100,7 @@ function App() {
       { !showInstructions &&
           zoomedIn &&
         <div>
-          <button className="absolute bottom-[10.25rem] left-2 md:left-2 z-50 bg-black text-white text-xs md:text-md p-4" onClick={() => handleBackButton() }>BACK</button>
+          <button className="absolute bottom-[8.25rem] left-2 md:left-2 z-50 bg-black text-white text-xs md:text-md p-4" onClick={() => handleBackButton() }>BACK</button>
         </div>
       }
       { !showInstructions &&
