@@ -106,10 +106,6 @@ export default function Jukebox(props) {
   }, [hovered])
 
   useEffect(() => {
-    console.log('updating', playingAllSongs)
-  }, [ playingAllSongs ])
-
-  useEffect(() => {
       if (width < 768) {
         setMobileDevice(true)
       } else {
@@ -126,6 +122,14 @@ export default function Jukebox(props) {
   }
 
   const vec = new THREE.Vector3()
+
+  useEffect(() => {
+    if (props.songPaused) {
+      audioArray.current[activeAudio].pause()
+    } else {
+      audioArray.current[activeAudio].play()
+    }
+  }, [ props.songPaused ])
 
   useFrame((state) => {
     const rotMax = 2.0
@@ -150,63 +154,18 @@ export default function Jukebox(props) {
   })
 
   function playNewSong(pos) {
-    console.log("Playing Song: " + pos)
     audioArray.current[activeAudio].unload()
-    switch (pos) {
-      // case 2:
-      // case 3:
-      // case 4:
-      // case 5:
-      // case 6:
-      //   props.toggleSpotifySong(pos)
-      //   setActiveAudio(pos)
-      //   setAudioPaused(false)
-      //   break
-      case(0):
-        audioArray.current.map((song, index) => { 
-          if (index === 0) {
-            audioArray.current[activeAudio].unload()
-            song.play()
-            setActiveAudio(pos)
-            setAudioPaused(false)
-          }
-        })
-        break
-      case(1):
-        audioArray.current.map((song, index) => {
-          if (index === 1) {
-            audioArray.current[activeAudio].unload()
-            song.play()
-            setActiveAudio(pos)
-            setAudioPaused(false)
-          }
-        })
-        break
-      default:
-        audioArray.current.map((song, index) => {
-          if (index === pos) {
-            audioArray.current[activeAudio].unload()
-            song.play()
-            setActiveAudio(pos)
-            setAudioPaused(false)
-          }
-        })
+    setTimeout(() => {
+      audioArray.current.map((song, index) => {
+        if (index === pos) {
+          song.stop()
+          song.play()
+          setActiveAudio(pos)
+          props.setSongPaused(false)
+        }
+      })
+    }, 100)
 
-        break
-    }
-    // audioArray.current[activeAudio].unload()
-  
-    // audioArray.current.map((song, index) => {
-    //   if (index === pos) {
-    //     // song.seek(218)
-    //     song.play()
-    //     setActiveAudio(pos)
-    //     setAudioPaused(false)
-    //   } else {
-    //     song.stop()
-    //   }
-      
-    // })
   }
 
   var playingAllSongs = true
@@ -216,17 +175,12 @@ export default function Jukebox(props) {
       audioArray.current.map(song => {
           song.stop()
       })
-      setTimeout(() => {
-        console.log('timeout?')
-      }, 1000)
     
   }
 
   function handleSongEnd(num) {
-    console.log(num, playingAllSongs)
       switch(num) {
         case(0):
-          console.log('first song ended')
           if (playingAllSongs === true) {
             handleSongButtonClick(2)
           } else {
@@ -235,7 +189,6 @@ export default function Jukebox(props) {
           }
           break
         case(1):
-          console.log('second song ended')
           if (playingAllSongs === true) {
             handleSongButtonClick(3)
           } else {
@@ -244,7 +197,6 @@ export default function Jukebox(props) {
           }
           break
         case(2):
-          console.log('third song ended')
           if (playingAllSongs === true) {
             handleSongButtonClick(4)
           } else {
@@ -253,7 +205,6 @@ export default function Jukebox(props) {
           }
           break
         case(3):
-          console.log('fourth song ended')
           if (playingAllSongs === true) {
             handleSongButtonClick(5)
           } else {
@@ -262,7 +213,6 @@ export default function Jukebox(props) {
           }
           break
         case(4):
-          console.log('fifth song ended')
           if (playingAllSongs === true) {
             handleSongButtonClick(6)
           } else {
@@ -271,7 +221,6 @@ export default function Jukebox(props) {
           }
           break
         case(5):
-          console.log('sixth song ended')
           if (playingAllSongs === true) {
             handleSongButtonClick(7)
           } else {
@@ -280,7 +229,6 @@ export default function Jukebox(props) {
           }
           break
         case(6):
-          console.log('seventh song ended')
           if (playingAllSongs === true) {
             handleSongButtonClick(8)
           } else {
@@ -289,7 +237,6 @@ export default function Jukebox(props) {
           }
           break
         case(7):
-          console.log('eighth song ended')
           if (playingAllSongs === true) {
             handleSongButtonClick(9)
           } else {
@@ -298,7 +245,6 @@ export default function Jukebox(props) {
           }
           break
         case(8):
-          console.log('ninth song ended')
           if (playingAllSongs === true) {
             handleSongButtonClick(10)
           } else {
@@ -307,7 +253,6 @@ export default function Jukebox(props) {
           }
           break
         case(9):
-          console.log('tenth song ended')
           if (playingAllSongs === true) {
             handleSongButtonClick(11)
           } else {
@@ -316,7 +261,6 @@ export default function Jukebox(props) {
           }
           break
         case(10):
-          console.log('eleventh song ended')
           if (playingAllSongs === true) {
             handleSongButtonClick(12)
           } else {
@@ -325,7 +269,6 @@ export default function Jukebox(props) {
           }
           break
         case(11):
-          console.log('thats all folks!')
           gsap.to(songButton12.current.material, { emissiveIntensity: 0.0 })
           setSongButton12Active(false)
           break
@@ -338,7 +281,6 @@ export default function Jukebox(props) {
     props.togglePause()
     audioArray.current.map((song, index) => {
       if (index === activeAudio) {
-        console.log('this is the song!')
         if (audioPaused === false) {
           song.pause() 
           setAudioPaused(true)
@@ -365,6 +307,7 @@ export default function Jukebox(props) {
     if (!firstSongPlayed) {
       setFirstSongPlayed(true)
     }
+    
     switch (num) {
       case(1):
         gsap.to(songButton1.current.material, { emissiveIntensity: 1.5 })
@@ -373,7 +316,7 @@ export default function Jukebox(props) {
           songButton6.current.material, songButton7.current.material, songButton8.current.material, songButton9.current.material,
           songButton10.current.material, songButton11.current.material, songButton12.current.material
         ], { emissiveIntensity: 0.0 })
-        props.togglePause()
+        // props.togglePause()
         playNewSong(0)
         setSongButton1Active(true)
         setSongButton2Active(false)
@@ -395,7 +338,7 @@ export default function Jukebox(props) {
           songButton6.current.material, songButton7.current.material, songButton8.current.material, songButton9.current.material,
           songButton10.current.material, songButton11.current.material, songButton12.current.material
         ], { emissiveIntensity: 0.0 })
-        props.togglePause()
+        // props.togglePause()
         playNewSong(1)
         setSongButton1Active(false)
         setSongButton2Active(true)
@@ -417,7 +360,7 @@ export default function Jukebox(props) {
           songButton6.current.material, songButton7.current.material, songButton8.current.material, songButton9.current.material,
           songButton10.current.material, songButton11.current.material, songButton12.current.material
         ], { emissiveIntensity: 0.0 })
-        props.togglePause()
+        // props.togglePause()
         playNewSong(2)
         setSongButton1Active(false)
         setSongButton2Active(false)
@@ -439,7 +382,7 @@ export default function Jukebox(props) {
           songButton6.current.material, songButton7.current.material, songButton8.current.material, songButton9.current.material,
           songButton10.current.material, songButton11.current.material, songButton12.current.material
         ], { emissiveIntensity: 0.0 })
-        props.togglePause()
+        // props.togglePause()
         playNewSong(3)
         setSongButton1Active(false)
         setSongButton2Active(false)
@@ -461,7 +404,7 @@ export default function Jukebox(props) {
           songButton6.current.material, songButton7.current.material, songButton8.current.material, songButton9.current.material,
           songButton10.current.material, songButton11.current.material, songButton12.current.material
         ], { emissiveIntensity: 0.0 })
-        props.togglePause()
+        // props.togglePause()
         playNewSong(4)
         setSongButton1Active(false)
         setSongButton2Active(false)
@@ -483,7 +426,7 @@ export default function Jukebox(props) {
           songButton5.current.material, songButton7.current.material, songButton8.current.material, songButton9.current.material,
           songButton10.current.material, songButton11.current.material, songButton12.current.material
         ], { emissiveIntensity: 0.0 })
-        props.togglePause()
+        // props.togglePause()
         playNewSong(5)
         setSongButton1Active(false)
         setSongButton2Active(false)
@@ -527,6 +470,7 @@ export default function Jukebox(props) {
           songButton10.current.material, songButton11.current.material, songButton12.current.material
         ], { emissiveIntensity: 0.0 })
         playNewSong(7)
+        console.log('gogo')
         setSongButton1Active(false)
         setSongButton2Active(false)
         setSongButton3Active(false)
@@ -640,8 +584,6 @@ export default function Jukebox(props) {
       ], { emissiveIntensity: 0.0 })
       playNewSong(0)
       setSongButton1Active(true)
-    } else {
-      console.log('it is not the first click :(')
     }
     setTimeout(() => {
       setOnButtonActive(true)

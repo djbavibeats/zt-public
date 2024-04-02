@@ -84,6 +84,8 @@ export default function Experience(props) {
             toggleZoomedIn={ props.toggleZoomedIn }
             toggleSpotifySong={ props.toggleSpotifySong }
             togglePause={ props.togglePause }
+            setSongPaused={ props.setSongPaused }
+            songPaused={ props.songPaused }
         />
         <Backdrop position={[ 0, -1 - 0.30, -15 ]} scale={[ 50, 10, 10 ]}>
             <meshStandardMaterial color="#3e3131" />

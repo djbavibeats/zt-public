@@ -13,11 +13,9 @@ export default function Base(props) {
 
     useEffect(() => {
         if (props.isActive) {
-            console.log('turn on the lights')
             gsap.to(yellowLights.current.material, { emissiveIntensity: 1.5 })
             gsap.to(redLights.current.material, { emissiveIntensity: 1.5 })
         } else {
-            console.log('turn off the lights')
             gsap.to(yellowLights.current.material, { emissiveIntensity: 0.4 })
             gsap.to(redLights.current.material, { emissiveIntensity: 0.4 })
         }

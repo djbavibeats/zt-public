@@ -25,6 +25,8 @@ function App() {
   const [ zoomedIn, setZoomedIn ] = useState(true)
   const [ reset, doReset ] = useState(0)
   const [ pause, setPause ] = useState(false)
+
+  const [ songPaused, setSongPaused ] = useState(false)
   
 
   function beginExperience() {
@@ -37,13 +39,16 @@ function App() {
     setShowInstructions(true)
   }
 
+  function handlePauseButton() {
+    setSongPaused(!songPaused)
+  }
+
   function toggleZoomedIn() {
     setZoomedIn(!zoomedIn)
   }
 
   function togglePause() {
-    console.log('pause')
-    setPause(!pause)
+    // setPause(!pause)
   }
 
   function initializeSpotifyPlayer() {
@@ -51,7 +56,6 @@ function App() {
   }
 
   function toggleSpotifySong(pos) {
-    console.log('toggle!', pos)
     switch (pos) {
       case(1):
         setCurrentSpotifyId('https://soundcloud.com/zachtop/sounds-like-the-radio-1')
@@ -77,9 +81,6 @@ function App() {
     }
   }
 
-  useEffect(() => {
-    console.log('something happened with the zoom')
-  }, [ zoomedIn ])
   return (
     <>
       <Header />
@@ -102,6 +103,20 @@ function App() {
         <div>
           <button className="absolute bottom-[8.25rem] left-2 md:left-2 z-50 bg-black text-white text-xs md:text-md p-4" onClick={() => handleBackButton() }>BACK</button>
         </div>
+      }
+      {
+        !showInstructions &&
+          zoomedIn &&
+          <div>
+            <button className="absolute bottom-[8.25rem] right-2 md:right-2 z-50 bg-black p-2 text-white text-xl md:text-xl" onClick={() => handlePauseButton() }>
+              <div className="flex items-center justify-center h-8 w-8 text-md text-white">
+              { songPaused ?
+                <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="#ffffff" d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg>
+                : <svg className="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="#ffffff" d="M48 64C21.5 64 0 85.5 0 112V400c0 26.5 21.5 48 48 48H80c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H48zm192 0c-26.5 0-48 21.5-48 48V400c0 26.5 21.5 48 48 48h32c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H240z"/></svg>
+              }
+              </div>
+            </button> 
+          </div>
       }
       { !showInstructions &&
           !zoomedIn &&
@@ -144,6 +159,8 @@ function App() {
           toggleZoomedIn={ toggleZoomedIn }
           toggleSpotifySong={ toggleSpotifySong }
           togglePause={ togglePause }
+          songPaused={ songPaused }
+          setSongPaused={ setSongPaused }
         />
         </Suspense>
       </Canvas>
