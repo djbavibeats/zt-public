@@ -69,34 +69,45 @@ export default function Jukebox(props) {
 
   const flicker = useRef(null)
 
-  const audioArray = useRef([
-    // new Howl({ src: './audio/spoken/intro.mp3', html5: true, preload: true, onplay: () => { setIntroPlaying(true) }, onend: () => handleSongEnd(0) }),
-    // new Howl({ 
-    //   src:  './audio/songs/sounds-like-the-radio.mp3', 
-    //   html5: true, 
-    //   preload: true, 
-    //   onend: () => handleSongEnd(1)
-    // }),
-    // new Howl({ src:  './audio/songs/theres-the-sun.mp3', html5: true, preload: true, onend: () => handleSongEnd(2) }),
-    // new Howl({ src:  './audio/songs/cold-beer-and-country-music.mp3', html5: true, preload: true, onend: () => handleSongEnd(3) }),
-    // new Howl({ src:  './audio/songs/bad-luck.mp3', html5: true, preload: true, onend: () => handleSongEnd(4) }),
-    // new Howl({ src: './audio/songs/kind-of-woman-i-like.mp3', html5: true, preload: true, onend: () => handleSongEnd(5) }),
-    // new Howl({ src: './audio/songs/justa-jonesin.mp3', html5: true, preload: true, onend: () => handleSongEnd(6)})
+  const audioArray = useRef(null)
+  if (!audioArray.current) {
+    audioArray.current = [
+      // Album Preview songs
+      new Howl({ src: './audio/album-preview/sounds-like-the-radio.mp3', html5: true, preload: true, onend: () => handleSongEnd(0) }),
+      new Howl({ src: './audio/album-preview/cold-beer.mp3', html5: true, preload: true, onend: () => handleSongEnd(1) }),
+      new Howl({ src: './audio/album-preview/cowboys-like-me-do.mp3', html5: true, preload: true, onend: () => handleSongEnd(2) }),
+      new Howl({ src: './audio/album-preview/theres-the-sun.mp3', html5: true, preload: true, onend: () => handleSongEnd(3) }),
+      new Howl({ src: './audio/album-preview/dirt-turns-to-gold.mp3', html5: true, preload: true, onend: () => handleSongEnd(4) }),
+      new Howl({ src: './audio/album-preview/the-kinda-woman-i-like.mp3', html5: true, preload: true, onend: () => handleSongEnd(5) }),
+      new Howl({ src: './audio/album-preview/lonely-for-long.mp3', html5: true, preload: true, onend: () => handleSongEnd(6) }),
+      new Howl({ src: './audio/album-preview/bad-luck.mp3', html5: true, preload: true, onend: () => handleSongEnd(7) }),
+      new Howl({ src: './audio/album-preview/use-me.mp3', html5: true, preload: true, onend: () => handleSongEnd(8) }),
+      new Howl({ src: './audio/album-preview/aint-that-a-heartbreak.mp3', html5: true, preload: true, onend: () => handleSongEnd(9) }),
+      new Howl({ src: './audio/album-preview/i-never-lie.mp3', html5: true, preload: true, onend: () => handleSongEnd(10) }),
+      new Howl({ src: './audio/album-preview/things-to-do.mp3', html5: true, preload: true, onend: () => handleSongEnd(11) }),
+    ]
+  }
 
-    // Album Preview songs
-    new Howl({ src: './audio/album-preview/sounds-like-the-radio.mp3', html5: true, preload: true, onend: () => handleSongEnd(0) }),
-    new Howl({ src: './audio/album-preview/cold-beer.mp3', html5: true, preload: true, onend: () => handleSongEnd(1) }),
-    new Howl({ src: './audio/album-preview/cowboys-like-me-do.mp3', html5: true, preload: true, onend: () => handleSongEnd(2) }),
-    new Howl({ src: './audio/album-preview/theres-the-sun.mp3', html5: true, preload: true, onend: () => handleSongEnd(3) }),
-    new Howl({ src: './audio/album-preview/dirt-turns-to-gold.mp3', html5: true, preload: true, onend: () => handleSongEnd(4) }),
-    new Howl({ src: './audio/album-preview/the-kinda-woman-i-like.mp3', html5: true, preload: true, onend: () => handleSongEnd(5) }),
-    new Howl({ src: './audio/album-preview/lonely-for-long.mp3', html5: true, preload: true, onend: () => handleSongEnd(6) }),
-    new Howl({ src: './audio/album-preview/bad-luck.mp3', html5: true, preload: true, onend: () => handleSongEnd(7) }),
-    new Howl({ src: './audio/album-preview/use-me.mp3', html5: true, preload: true, onend: () => handleSongEnd(8) }),
-    new Howl({ src: './audio/album-preview/aint-that-a-heartbreak.mp3', html5: true, preload: true, onend: () => handleSongEnd(9) }),
-    new Howl({ src: './audio/album-preview/i-never-lie.mp3', html5: true, preload: true, onend: () => handleSongEnd(10) }),
-    new Howl({ src: './audio/album-preview/things-to-do.mp3', html5: true, preload: true, onend: () => handleSongEnd(11) }),
-  ])
+ 
+  // const audioArray = useRef([
+  //   // Album Preview songs
+  //   new Howl({ src: './audio/album-preview/sounds-like-the-radio.mp3', html5: true, preload: true, onend: () => handleSongEnd(0) }),
+  //   new Howl({ src: './audio/album-preview/cold-beer.mp3', html5: true, preload: true, onend: () => handleSongEnd(1) }),
+  //   new Howl({ src: './audio/album-preview/cowboys-like-me-do.mp3', html5: true, preload: true, onend: () => handleSongEnd(2) }),
+  //   new Howl({ src: './audio/album-preview/theres-the-sun.mp3', html5: true, preload: true, onend: () => handleSongEnd(3) }),
+  //   new Howl({ src: './audio/album-preview/dirt-turns-to-gold.mp3', html5: true, preload: true, onend: () => handleSongEnd(4) }),
+  //   new Howl({ src: './audio/album-preview/the-kinda-woman-i-like.mp3', html5: true, preload: true, onend: () => handleSongEnd(5) }),
+  //   new Howl({ src: './audio/album-preview/lonely-for-long.mp3', html5: true, preload: true, onend: () => handleSongEnd(6) }),
+  //   new Howl({ src: './audio/album-preview/bad-luck.mp3', html5: true, preload: true, onend: () => handleSongEnd(7) }),
+  //   new Howl({ src: './audio/album-preview/use-me.mp3', html5: true, preload: true, onend: () => handleSongEnd(8) }),
+  //   new Howl({ src: './audio/album-preview/aint-that-a-heartbreak.mp3', html5: true, preload: true, onend: () => handleSongEnd(9) }),
+  //   new Howl({ src: './audio/album-preview/i-never-lie.mp3', html5: true, preload: true, onend: () => handleSongEnd(10) }),
+  //   new Howl({ src: './audio/album-preview/things-to-do.mp3', html5: true, preload: true, onend: () => handleSongEnd(11) }),
+  // ])
+
+  useEffect(() => {
+    console.log('audio array changin')
+  }, [ audioArray ])
 
   var buttonAudio = new Howl({ src: '/audio/fx/buttonpress.mp3' })
   var lightAudio = new Howl({ src:'/audio/fx/lightson.mp3' })
@@ -179,6 +190,7 @@ export default function Jukebox(props) {
   }
 
   function handleSongEnd(num) {
+      audioArray.current[num].unload()
       switch(num) {
         case(0):
           if (playingAllSongs === true) {
@@ -582,6 +594,7 @@ export default function Jukebox(props) {
         songButton5.current.material, songButton6.current.material, songButton7.current.material,  songButton8.current.material, songButton9.current.material,
         songButton10.current.material, songButton11.current.material, songButton12.current.material
       ], { emissiveIntensity: 0.0 })
+      console.log('umm')
       playNewSong(0)
       setSongButton1Active(true)
     }
