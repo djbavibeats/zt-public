@@ -588,15 +588,15 @@ export default function Jukebox(props) {
     setJukeboxActive(true)
     if (firstClick) {
       setFirstClick(false) 
-      gsap.to(songButton1.current.material, { emissiveIntensity: 1.5 })
-      gsap.to([
-        songButton2.current.material, songButton3.current.material, songButton4.current.material,
-        songButton5.current.material, songButton6.current.material, songButton7.current.material,  songButton8.current.material, songButton9.current.material,
-        songButton10.current.material, songButton11.current.material, songButton12.current.material
-      ], { emissiveIntensity: 0.0 })
-      console.log('umm')
-      playNewSong(0)
-      setSongButton1Active(true)
+      // gsap.to(songButton1.current.material, { emissiveIntensity: 1.5 })
+      // gsap.to([
+      //   songButton2.current.material, songButton3.current.material, songButton4.current.material,
+      //   songButton5.current.material, songButton6.current.material, songButton7.current.material,  songButton8.current.material, songButton9.current.material,
+      //   songButton10.current.material, songButton11.current.material, songButton12.current.material
+      // ], { emissiveIntensity: 0.0 })
+      // console.log('umm')
+      // playNewSong(0)
+      // setSongButton1Active(true)
     }
     setTimeout(() => {
       setOnButtonActive(true)
